@@ -35,7 +35,7 @@ public class Helper
         return userAlphabet;
     }
 
-    public static int CheckNumbersInInput(string defaultShiftAmount)
+    public static int CheckNumbersInInput(string defaultShiftAmount, int alphabetLength)
     {
         var isInt = false;
         var shiftInInt = 0;
@@ -44,8 +44,8 @@ public class Helper
             isInt = true;
             Console.Write($"Input your shift amount [{defaultShiftAmount.ToString()}]: ");
             var shiftAmount = Console.ReadLine();
-            
-            if (string.IsNullOrWhiteSpace(shiftAmount) || shiftAmount == "0")
+
+            if (string.IsNullOrWhiteSpace(shiftAmount))
             {
                 shiftAmount = defaultShiftAmount;
             }
@@ -55,7 +55,16 @@ public class Helper
                 isInt = false;
                 Console.WriteLine("Shift amount can only be an integer!");
             }
-            
+            else if (shiftInInt == 0)
+            {
+                isInt = false;
+                Console.WriteLine("Shift amount cannot be zero!");
+            } else if (shiftInInt > alphabetLength)
+            {
+                Console.WriteLine("Shift amount cannot be longer than the alphabet itself!");
+                isInt = false;
+            }
+
         } 
         
         return shiftInInt;

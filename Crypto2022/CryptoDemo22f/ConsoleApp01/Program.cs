@@ -13,6 +13,6 @@ Console.WriteLine(alphabet);
 // look into int.TryParse(), no chars, no symbols, no zero, input must be smaller than alphabets
 Console.Write("Caesar shift amount: ");
 
-var shiftAmount = Helper.CheckNumbersInInput(defaultShiftAmount);
+var shiftAmount = Helper.CheckNumbersInInput(defaultShiftAmount, alphabet.Length);
 
 Console.WriteLine(shiftAmount);
