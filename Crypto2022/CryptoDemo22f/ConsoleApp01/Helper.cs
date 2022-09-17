@@ -4,7 +4,7 @@ public class Helper
 {
     public static string GetUserAlphabet(string defaultAlphabet)
     {
-        var isValidInput = true;
+        bool isValidInput;
         string? userAlphabet;
         do
         {
@@ -33,5 +33,31 @@ public class Helper
         } while (isValidInput == false);
 
         return userAlphabet;
-    } 
+    }
+
+    public static int CheckNumbersInInput(string defaultShiftAmount)
+    {
+        var isInt = false;
+        var shiftInInt = 0;
+        while (isInt == false)
+        {
+            isInt = true;
+            Console.Write($"Input your shift amount [{defaultShiftAmount.ToString()}]: ");
+            var shiftAmount = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(shiftAmount) || shiftAmount == "0")
+            {
+                shiftAmount = defaultShiftAmount;
+            }
+            
+            if (!int.TryParse(shiftAmount, out shiftInInt))
+            {
+                isInt = false;
+                Console.WriteLine("Shift amount can only be an integer!");
+            }
+            
+        } 
+        
+        return shiftInInt;
+    }
 }
