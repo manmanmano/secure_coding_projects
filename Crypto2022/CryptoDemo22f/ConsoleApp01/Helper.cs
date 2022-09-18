@@ -59,9 +59,9 @@ public class Helper
             {
                 isInt = false;
                 Console.WriteLine("Shift amount cannot be zero!");
-            } else if (shiftInInt > alphabetLength)
+            } else if (shiftInInt >= alphabetLength)
             {
-                Console.WriteLine("Shift amount cannot be longer than the alphabet itself!");
+                Console.WriteLine("Shift amount cannot be equal or bigger than the alphabet itself!");
                 isInt = false;
             }
 
