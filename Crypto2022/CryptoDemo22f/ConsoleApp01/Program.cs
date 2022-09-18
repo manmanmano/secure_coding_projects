@@ -9,8 +9,6 @@ var alphabet = Helper.GetUserAlphabet(defaultAlphabet);
 
 Console.WriteLine(alphabet);
 
-Console.Write("Caesar shift amount: ");
-
 var shiftAmount = Helper.CheckNumbersInInput(defaultShiftAmount, alphabet.Length);
 
 Console.WriteLine(shiftAmount);

@@ -2,6 +2,15 @@ namespace ConsoleApp01;
 
 public class Helper
 {
+    public static void endApplication(string userInput)
+    {
+        if (userInput.ToLower() == "exit")
+        {
+            Console.WriteLine("Exiting the application...");
+            Environment.Exit(0);
+        }
+    }
+    
     public static string GetUserAlphabet(string defaultAlphabet)
     {
         bool isValidInput;
@@ -9,13 +18,15 @@ public class Helper
         do
         {
             isValidInput = true;
-            Console.Write($"Input your userAlphabet [{defaultAlphabet.ToString()}]: ");
+            Console.Write($"Input your userAlphabet [{defaultAlphabet.ToString()}] or type 'exit' to quit: ");
             userAlphabet = Console.ReadLine();
-
+            
             if (string.IsNullOrWhiteSpace(userAlphabet) || userAlphabet.Length == 1)
             {
                 userAlphabet = defaultAlphabet;
             }
+            
+            endApplication(userAlphabet);
 
             var charSet = new HashSet<char>();
 
@@ -42,7 +53,7 @@ public class Helper
         while (isInt == false)
         {
             isInt = true;
-            Console.Write($"Input your shift amount [{defaultShiftAmount.ToString()}]: ");
+            Console.Write($"Input your shift amount [{defaultShiftAmount.ToString()}] or type 'exit' to quit: ");
             var shiftAmount = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(shiftAmount))
@@ -50,6 +61,8 @@ public class Helper
                 shiftAmount = defaultShiftAmount;
             }
             
+            endApplication(shiftAmount);
+
             if (!int.TryParse(shiftAmount, out shiftInInt))
             {
                 isInt = false;
