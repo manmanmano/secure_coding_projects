@@ -2,7 +2,7 @@ namespace ConsoleApp01;
 
 public class Helper
 {
-    public static void endApplication(string userInput)
+    private static void EndApplication(string userInput)
     {
         if (userInput.ToLower() == "exit")
         {
@@ -26,7 +26,7 @@ public class Helper
                 userAlphabet = defaultAlphabet;
             }
             
-            endApplication(userAlphabet);
+            EndApplication(userAlphabet);
 
             var charSet = new HashSet<char>();
 
@@ -61,7 +61,7 @@ public class Helper
                 shiftAmount = defaultShiftAmount;
             }
             
-            endApplication(shiftAmount);
+            EndApplication(shiftAmount);
 
             if (!int.TryParse(shiftAmount, out shiftInInt))
             {
