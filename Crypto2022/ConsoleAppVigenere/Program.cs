@@ -1,5 +1,9 @@
-﻿Console.Write("Plaintext: ");
-var plaintext = Console.ReadLine();
+﻿using ConsoleAppVigenere;
+
+Console.Write("Plaintext: ");
+var plaintext = Helper.GetPlaintext();  
+
+/*
 Console.Write("Passphrase: ");
 var passphrase = Console.ReadLine();
 
@@ -16,3 +20,4 @@ foreach (var b in passphraseBytes)
 {
     Console.Write(b + " ");
 }
+*/
