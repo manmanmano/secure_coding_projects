@@ -3,6 +3,9 @@
 Console.Write("Plaintext: ");
 var plaintext = Helper.GetPlaintext();  
 
+Console.Write("Passphrase: ");
+var passphrase = Helper.GetPassphrase();
+
 /*
 Console.Write("Passphrase: ");
 var passphrase = Console.ReadLine();
