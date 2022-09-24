@@ -1,6 +1,8 @@
 # Common IntelliJ Platform excludes
 
 .idea
+*.sln
+*.csproj
 
 # User specific
 **/.idea/**/workspace.xml
