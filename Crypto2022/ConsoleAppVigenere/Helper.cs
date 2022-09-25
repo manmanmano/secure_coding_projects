@@ -62,7 +62,7 @@ public class Helper
     public static string EncryptText(string plaintext, string passphrase)
     {
         var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(plaintext!);
-        Console.Write("Bytes for plaintext: ");
+        Console.Write("Plaintext bytes: ");
         // print out bytes of plaintext
         foreach (var b in plaintextBytes) Console.Write(b + " ");
 
@@ -73,12 +73,13 @@ public class Helper
         {
             passphraseInts.Add(b);
         }
-        Console.Write("\nBytes for passphrase: ");
+        Console.Write("\nPassphrase bytes: ");
         // print out bytes of passphrase
         foreach (var b in passphraseInts) Console.Write(b + " ");
 
         ValidateKeyLength(plaintextBytes, passphraseInts);
-        Console.Write("\nBytes after fix: ");
+        Console.Write("\nPassphrase bytes after validation: ");
+        // print out bytes of new validated passphrase
         foreach (var b in passphraseInts) Console.Write(b + " ");
         
         var shiftedBytes = new byte[plaintextBytes.Length];
@@ -87,13 +88,11 @@ public class Helper
             shiftedBytes[i] = (byte)((plaintextBytes[i] + passphraseInts[i]) % 255);
         }
         // print out new bytes of shifted value
-        Console.Write("\nBytes after shifting with Vigenere: ");
+        Console.Write("\nPlaintext bytes after Vigenere encryption: ");
         foreach (var b in shiftedBytes) Console.Write(b + " ");
 
         var b64Text = System.Convert.ToBase64String(shiftedBytes);
-        
         return b64Text; 
-        return "";
     }
     
 }
