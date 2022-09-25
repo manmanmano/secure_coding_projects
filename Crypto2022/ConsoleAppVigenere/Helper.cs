@@ -46,12 +46,23 @@ public class Helper
     private static void ValidateKeyLength(byte[] plaintextBytes, IList passphraseInts)
     {
         bool isEqual;
+        int i = 0;
         do
         {
             isEqual = true;
             if (plaintextBytes.Length < passphraseInts.Count)
             {
                 passphraseInts.RemoveAt(passphraseInts.Count - 1);
+                isEqual = false;
+            }
+            else if (plaintextBytes.Length > passphraseInts.Count)
+            {
+                if (i == passphraseInts.Count)
+                {
+                    i = 0;
+                }
+                passphraseInts.Add(passphraseInts[i]);
+                i++;
                 isEqual = false;
             }
 
