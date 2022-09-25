@@ -41,39 +41,9 @@ public class Helper
     }
 
     
-    private static byte[] CheckKeyLength(byte[] plaintextBytes, byte[] passphraseBytes)
+    private static void CheckKeyLength(byte[] plaintextBytes, byte[] passphraseBytes)
     {
-        byte[] passphraseBytesCpy = new byte[passphraseBytes.Length];
-        if (plaintextBytes.Length > passphraseBytes.Length)
-        {
-            for (int j = 0; j < passphraseBytes.Length; j++)
-            {
-                passphraseBytesCpy[j] = passphraseBytes[j];
-            }
-            passphraseBytes = new byte[plaintextBytes.Length];
-        }
         
-        int i = 0;
-        while (plaintextBytes.Length != passphraseBytes.Length)
-        {
-            // is the key is longer than the actual plaintext, start trimming it from the end
-            if (plaintextBytes.Length < passphraseBytes.Length)
-            {
-                passphraseBytes = passphraseBytes.SkipLast(1).ToArray();
-            }
-
-            if (plaintextBytes.Length > passphraseBytes.Length)
-            {
-                if (i == (passphraseBytesCpy.Length - 1))
-                {
-                    i = 0;
-                }
-                passphraseBytes[passphraseBytesCpy.Length] = passphraseBytesCpy[i];
-                i += 1;
-            }
-        }
-
-        return passphraseBytes;
     }
 
     
@@ -86,8 +56,8 @@ public class Helper
         var passphraseBytes = System.Text.Encoding.UTF8.GetBytes(passphrase!);
         Console.Write("\nBytes for passphrase: ");
         foreach (var b in passphraseBytes) Console.Write(b + " ");
-        
-        passphraseBytes = CheckKeyLength(plaintextBytes, passphraseBytes);
+
+//        passphraseBytes = CheckKeyLength(passphraseBytesFresh, passphraseBytes);
         Console.Write("\nBytes after fix: ");
         foreach (var b in passphraseBytes) Console.Write(b + " ");
         
