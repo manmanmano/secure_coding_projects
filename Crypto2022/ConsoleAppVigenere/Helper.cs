@@ -43,6 +43,16 @@ public class Helper
     
     private static byte[] CheckKeyLength(byte[] plaintextBytes, byte[] passphraseBytes)
     {
+        byte[] passphraseBytesCpy = new byte[passphraseBytes.Length];
+        if (plaintextBytes.Length > passphraseBytes.Length)
+        {
+            for (int j = 0; j < passphraseBytes.Length; j++)
+            {
+                passphraseBytesCpy[j] = passphraseBytes[j];
+            }
+            passphraseBytes = new byte[plaintextBytes.Length];
+        }
+        
         int i = 0;
         while (plaintextBytes.Length != passphraseBytes.Length)
         {
@@ -54,11 +64,11 @@ public class Helper
 
             if (plaintextBytes.Length > passphraseBytes.Length)
             {
-                if (i == (passphraseBytes.Length))
+                if (i == (passphraseBytesCpy.Length - 1))
                 {
                     i = 0;
                 }
-                passphraseBytes[passphraseBytes.Length - 1] = passphraseBytes[i];
+                passphraseBytes[passphraseBytesCpy.Length] = passphraseBytesCpy[i];
                 i += 1;
             }
         }
