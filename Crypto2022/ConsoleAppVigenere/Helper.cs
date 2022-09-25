@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace ConsoleAppVigenere;
 
 
@@ -41,9 +43,19 @@ public class Helper
     }
 
     
-    private static void CheckKeyLength(byte[] plaintextBytes, byte[] passphraseBytes)
+    private static void ValidateKeyLength(byte[] plaintextBytes, IList passphraseInts)
     {
-        
+        bool isEqual;
+        do
+        {
+            isEqual = true;
+            if (plaintextBytes.Length < passphraseInts.Count)
+            {
+                passphraseInts.RemoveAt(passphraseInts.Count - 1);
+                isEqual = false;
+            }
+
+        } while (isEqual == false);
     }
 
     
@@ -65,9 +77,9 @@ public class Helper
         // print out bytes of passphrase
         foreach (var b in passphraseInts) Console.Write(b + " ");
 
-//        passphraseBytes = CheckKeyLength(passphraseBytesFresh, passphraseBytes);
+        ValidateKeyLength(plaintextBytes, passphraseInts);
         Console.Write("\nBytes after fix: ");
-        foreach (var b in passphraseBytes) Console.Write(b + " ");
+        foreach (var b in passphraseInts) Console.Write(b + " ");
         
         var shiftedBytes = new byte[plaintextBytes.Length];
         for (int i = 0; i < plaintextBytes.Length; i++)
