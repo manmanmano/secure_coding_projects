@@ -41,6 +41,32 @@ public class Helper
     }
 
     
+    private static byte[] CheckKeyLength(byte[] plaintextBytes, byte[] passphraseBytes)
+    {
+        int i = 0;
+        while (plaintextBytes.Length != passphraseBytes.Length)
+        {
+            // is the key is longer than the actual plaintext, start trimming it from the end
+            if (plaintextBytes.Length < passphraseBytes.Length)
+            {
+                passphraseBytes = passphraseBytes.SkipLast(1).ToArray();
+            }
+
+            if (plaintextBytes.Length > passphraseBytes.Length)
+            {
+                if (i == (passphraseBytes.Length))
+                {
+                    i = 0;
+                }
+                passphraseBytes[passphraseBytes.Length - 1] = passphraseBytes[i];
+                i += 1;
+            }
+        }
+
+        return passphraseBytes;
+    }
+
+    
     public static string EncryptText(string plaintext, string passphrase)
     {
         var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(plaintext!);
@@ -50,7 +76,11 @@ public class Helper
         var passphraseBytes = System.Text.Encoding.UTF8.GetBytes(passphrase!);
         Console.Write("\nBytes for passphrase: ");
         foreach (var b in passphraseBytes) Console.Write(b + " ");
-
+        
+        passphraseBytes = CheckKeyLength(plaintextBytes, passphraseBytes);
+        Console.Write("\nBytes after fix: ");
+        foreach (var b in passphraseBytes) Console.Write(b + " ");
+        
         var shiftedBytes = new byte[plaintextBytes.Length];
         for (int i = 0; i < plaintextBytes.Length; i++)
         {
