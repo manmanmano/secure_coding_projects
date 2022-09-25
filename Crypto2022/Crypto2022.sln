@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp01", "ConsoleApp01\ConsoleApp01.csproj", "{592B2E0C-782A-40A5-895D-87A8FD339DCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppCaesar", "ConsoleAppCaesar\ConsoleAppCaesar.csproj", "{592B2E0C-782A-40A5-895D-87A8FD339DCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppCaesarUTF", "ConsoleAppCaesarUTF\ConsoleAppCaesarUTF.csproj", "{37C907A9-FA34-4D59-B723-C7C98E6AE3E0}"
 EndProject
