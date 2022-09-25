@@ -51,6 +51,7 @@ public class Helper
     {
         var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(plaintext!);
         Console.Write("Bytes for plaintext: ");
+        // print out bytes of plaintext
         foreach (var b in plaintextBytes) Console.Write(b + " ");
 
         var passphraseBytes = System.Text.Encoding.UTF8.GetBytes(passphrase!);
@@ -61,23 +62,25 @@ public class Helper
             passphraseInts.Add(b);
         }
         Console.Write("\nBytes for passphrase: ");
+        // print out bytes of passphrase
         foreach (var b in passphraseInts) Console.Write(b + " ");
 
 //        passphraseBytes = CheckKeyLength(passphraseBytesFresh, passphraseBytes);
         Console.Write("\nBytes after fix: ");
         foreach (var b in passphraseBytes) Console.Write(b + " ");
         
-/*        var shiftedBytes = new byte[plaintextBytes.Length];
+        var shiftedBytes = new byte[plaintextBytes.Length];
         for (int i = 0; i < plaintextBytes.Length; i++)
         {
-            shiftedBytes[i] = (byte)((plaintextBytes[i] + passphraseBytes[i]) % 255);
+            shiftedBytes[i] = (byte)((plaintextBytes[i] + passphraseInts[i]) % 255);
         }
+        // print out new bytes of shifted value
         Console.Write("\nBytes after shifting with Vigenere: ");
         foreach (var b in shiftedBytes) Console.Write(b + " ");
 
         var b64Text = System.Convert.ToBase64String(shiftedBytes);
         
-        return b64Text; */
+        return b64Text; 
         return "";
     }
     
