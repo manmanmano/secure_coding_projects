@@ -3,6 +3,7 @@
 Console.WriteLine("Hello, Diffie Hellman!");
 
 // TODO: Check that it is a prime
+// TODO: Generate for user the biggest prime under user specified input
 Console.Write("Public key P (prime): ");
 var p = int.Parse(Console.ReadLine()?.Trim());
 
@@ -15,7 +16,9 @@ var a = int.Parse(Console.ReadLine()?.Trim());
 Console.Write("Person Y private key B: ");
 var b = int.Parse(Console.ReadLine()?.Trim());
 
-// TODO: memory overflow (int cannot contain 5^15)
+// TODO: Memory overflow (int cannot contain 5^15), applicate formulas
+// TODO: Implement your own ModPow, using long/int
+
 // var computeX = (long)Math.Pow(g, a) % p;
 var computeX = (long)BigInteger.ModPow(g, a, p);
 Console.WriteLine($"Person X computed: {computeX}");
