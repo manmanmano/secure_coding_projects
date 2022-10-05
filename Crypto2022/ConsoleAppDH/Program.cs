@@ -9,7 +9,8 @@ Console.WriteLine("Hello, Diffie Hellman!");
 // TODO: Check, that it is a prime
 // TODO: Generate for user the biggest prime under user specified value
 Console.Write("Public key P (prime) [generate randomly]: ");
-int p = Helper.ValidateP();
+var p = Helper.ValidateP();
+Console.WriteLine("The biggest possible prime in user defined range is: " + p);
 
 // Console.Write("Public key G (base number): ");
 // var g = int.Parse(Console.ReadLine()?.Trim()); 

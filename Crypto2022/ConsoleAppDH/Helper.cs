@@ -19,6 +19,7 @@ public class Helper
             }
             else if (p is 0 or 1)
             {
+                // no 0 or 1
                 Console.WriteLine("P cannot be 0 or 1!");
                 Console.Write("Public key P (prime) [generate randomly]: ");
                 isValid = false;
@@ -30,19 +31,12 @@ public class Helper
         // Just deal with the absolute value of P
         p = Math.Abs(p);
 
+        // Find biggest possible prime in user range, if user input is not prime
         if (!IsPrime(p))
         {
-            for (var i = p - 1; i > 1; i--)
-            {
-                if (IsPrime(i))
-                {
-                    p = i;
-                    break;
-                }
-            }
+            for (p -= 1; !IsPrime(p); p--){}
         }
-
-        Console.WriteLine(p);
+        
         return p;
     }
 
