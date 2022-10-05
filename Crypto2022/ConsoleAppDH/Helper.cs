@@ -14,11 +14,13 @@ public class Helper
             if (!int.TryParse(input, out p))
             {
                 Console.WriteLine("P must be an integer!");
+                Console.Write("Public key P (prime) [generate randomly]: ");
                 isValid = false;
             }
             else if (p is 0 or 1)
             {
                 Console.WriteLine("P cannot be 0 or 1!");
+                Console.Write("Public key P (prime) [generate randomly]: ");
                 isValid = false;
             }
             
