@@ -45,35 +45,25 @@ public class Helper
         return p;
     }
 
-
     
     private static int GenerateRandomPrime()
     {
         var rand = new Random();
         var p = rand.Next(2, 1000);
-        while (true)
-        {
-            if (IsPrime(p))
-            {
-                break;
-            }
-
-            p = rand.Next(2, 1000);
-        }
-
+        for (; !IsPrime(p); p = rand.Next(2, 1000)){} 
+        
         return p;
     }
+    
     
     private static bool IsPrime(int p)
     {
         var isPrime = true;
         for (var i = p - 1; i > 1; i--)
         {
-            if (p % i == 0)
-            {
-                isPrime = false;
-                break;
-            }
+            if (p % i != 0) continue;
+            isPrime = false;
+            break;
         }
 
         return isPrime;
