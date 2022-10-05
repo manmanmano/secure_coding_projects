@@ -1,25 +1,18 @@
 ﻿using System.Numerics;
 using ConsoleAppDH;
 
-// codes used in input validation function to differentiate output
-int pCode = 0, gCode = 1, pXCode = 2, pYCode = 3;
+
 
 Console.WriteLine("Hello, Diffie Hellman!");
 
-Console.Write("Public key P (prime) [generate randomly]: ");
-int p;
-var isPrime = int.TryParse(Console.ReadLine()?.Trim(), out p);
-if (!isPrime)
-{
-    p = Helper.ValidateInput(pCode);
-}
-
+// Check that input is an integer
 // TODO: Check, that it is a prime
 // TODO: Generate for user the biggest prime under user specified value
-p = Helper.CheckPrime(p);
+Console.Write("Public key P (prime) [generate randomly]: ");
+int p = Helper.ValidateP();
 
 // Console.Write("Public key G (base number): ");
-// var g = int.Parse(Console.ReadLine()?.Trim());
+// var g = int.Parse(Console.ReadLine()?.Trim()); 
 // 
 // Console.Write("PersonX private key A: ");
 // var a = int.Parse(Console.ReadLine()?.Trim());

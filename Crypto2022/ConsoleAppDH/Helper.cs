@@ -2,38 +2,62 @@ namespace ConsoleAppDH;
 
 public class Helper
 {
-    public static int ValidateInput(int functionCode)
+    public static int ValidateP()
     { 
-        Console.WriteLine("Input must be an integer!");
-        bool isInt;
-        string? input;
+        bool isValid;
         int p;
         do
-        {
-            isInt = true;
-            switch (functionCode)
-            {
-                case 0:
-                    Console.Write("Public key P (prime) [generate randomly]: ");
-                    break;
-            }
-            input = Console.ReadLine()?.Trim();
+        { 
+            isValid = true;
+            
+            var input = Console.ReadLine()?.Trim();
             if (!int.TryParse(input, out p))
             {
-                Console.WriteLine("Input must be an integer!");
-                isInt = false;
+                Console.WriteLine("P must be an integer!");
+                isValid = false;
             }
-        } while (isInt == false);
+            else if (p is 0 or 1)
+            {
+                Console.WriteLine("P cannot be 0 or 1!");
+                isValid = false;
+            }
+            
+            
+        } while (isValid == false);
+
+        // Just deal with the absolute value of P
+        p = Math.Abs(p);
+
+        if (!IsPrime(p))
+        {
+            for (var i = p - 1; i > 1; i--)
+            {
+                if (IsPrime(i))
+                {
+                    p = i;
+                    break;
+                }
+            }
+        }
+
+        Console.WriteLine(p);
         return p;
     }
+
     
-    
-    public static int CheckPrime(int prime)
+    private static bool IsPrime(int p)
     {
-        var input = 0;
-        if (prime == 0)
+        var isPrime = true;
+        for (var i = p - 1; i > 1; i--)
         {
+            if (p % i == 0)
+            {
+                isPrime = false;
+                break;
+            }
         }
-        return 0;
+
+        return isPrime;
     }
+    
 }
