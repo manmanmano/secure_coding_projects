@@ -46,6 +46,7 @@ public class Helper
     }
 
 
+    
     private static int GenerateRandomPrime()
     {
         var rand = new Random();

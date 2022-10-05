@@ -5,9 +5,7 @@ using ConsoleAppDH;
 
 Console.WriteLine("Hello, Diffie Hellman!");
 
-// Check that input is an integer
-// TODO: Check, that it is a prime
-// TODO: Generate for user the biggest prime under user specified value
+// Check that input is an integer, if empty generate it 
 Console.Write("Public key P (prime) [generate randomly]: ");
 var p = Helper.ValidateP();
 Console.WriteLine("The biggest possible prime in user defined range is: " + p);
