@@ -11,6 +11,12 @@ public class Helper
             isValid = true;
             
             var input = Console.ReadLine()?.Trim();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                // If input is whitespace, null, or empty generate a random prime from 2 to 1000
+                return GenerateRandomPrime();
+            }
+            
             if (!int.TryParse(input, out p))
             {
                 Console.WriteLine("P must be an integer!");
@@ -25,21 +31,37 @@ public class Helper
                 isValid = false;
             }
             
-            
         } while (isValid == false);
 
         // Just deal with the absolute value of P
         p = Math.Abs(p);
 
-        // Find biggest possible prime in user range, if user input is not prime
-        if (!IsPrime(p))
-        {
-            for (p -= 1; !IsPrime(p); p--){}
-        }
+        // If p is prime return it
+        if (IsPrime(p)) return p;
         
+        // Find biggest possible prime in user range, if user input is not prime
+        for (p -= 1; !IsPrime(p); p--){}
+
         return p;
     }
 
+
+    private static int GenerateRandomPrime()
+    {
+        var rand = new Random();
+        var p = rand.Next(2, 1000);
+        while (true)
+        {
+            if (IsPrime(p))
+            {
+                break;
+            }
+
+            p = rand.Next(2, 1000);
+        }
+
+        return p;
+    }
     
     private static bool IsPrime(int p)
     {
