@@ -2,7 +2,7 @@ namespace ConsoleAppDH;
 
 public class Helper
 {
-    public static int ValidateP()
+    public static int ValidatePrime()
     { 
         bool isValid;
         int p;
@@ -41,6 +41,11 @@ public class Helper
         return p;
     }
 
+
+    public static int ValidateInteger()
+    {
+        
+    }
     
     private static int GenerateRandomPrime()
     {

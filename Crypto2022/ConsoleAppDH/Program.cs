@@ -1,17 +1,15 @@
-﻿using System.Numerics;
-using ConsoleAppDH;
-
+﻿using ConsoleAppDH;
 
 
 Console.WriteLine("Hello, Diffie Hellman!");
 
 // Check that input is an integer, if empty generate it 
 Console.Write("Public key P (prime) [generate randomly]: ");
-var p = Helper.ValidateP();
+var p = Helper.ValidatePrime();
 Console.WriteLine("The biggest possible prime in user defined range is: " + p);
 
-// Console.Write("Public key G (base number): ");
-// var g = int.Parse(Console.ReadLine()?.Trim()); 
+Console.Write("Public key G (base number): ");
+var g = Helper.ValidateInteger();
 // 
 // Console.Write("PersonX private key A: ");
 // var a = int.Parse(Console.ReadLine()?.Trim());
