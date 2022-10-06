@@ -13,7 +13,6 @@ public class Helper
             var input = Console.ReadLine()?.Trim();
             if (string.IsNullOrWhiteSpace(input))
             {
-                // If input is whitespace, null, or empty generate a random prime from 2 to 1000
                 return GenerateRandomPrime();
             }
             
@@ -33,13 +32,10 @@ public class Helper
             
         } while (isValid == false);
 
-        // Just deal with the absolute value of P
         p = Math.Abs(p);
 
-        // If p is prime return it
         if (IsPrime(p)) return p;
         
-        // Find biggest possible prime in user range, if user input is not prime
         for (p -= 1; !IsPrime(p); p--){}
 
         return p;
