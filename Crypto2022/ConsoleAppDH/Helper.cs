@@ -167,4 +167,20 @@ public class Helper
         
         return temp * g % p;
     }
+
+
+    public static int BruteforceKey(int g, int p, int result)
+    {
+        int userKey;
+        for (var key = 0; ; key++)
+        {
+            if (ComputeKey(g, key, p) == result)
+            {
+                userKey = key;
+                break;
+            }
+        }
+
+        return userKey;
+    }
 }

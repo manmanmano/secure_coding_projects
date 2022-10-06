@@ -20,7 +20,7 @@ var bkey = Helper.ValidateKey("PersonY", "B", p);
 Console.WriteLine("PersonY private key B is " + bkey);
 
 var computeX = Helper.ComputeKey(g, akey, p);
-Console.WriteLine($"PersonX computed: {computeX}");
+Console.WriteLine($"\nPersonX computed: {computeX}");
 
 var computeY = Helper.ComputeKey(g, bkey, p);
 Console.WriteLine($"PersonY computed: {computeY}");
@@ -31,6 +31,8 @@ Console.WriteLine($"PersonX received {computeY} and computed: {computeX2}");
 var computeY2 = Helper.ComputeKey(computeX, bkey, p);
 Console.WriteLine($"PersonY received {computeX} and computed: {computeY2}");
 
+var bruteforceX = Helper.BruteforceKey(g, p, computeX);
+Console.WriteLine($"\nPersonX bruteforced key: {bruteforceX}");
 
-// TODO: ModPow algorithm (normal int cannot contain 5^15)
-// TODO: Bruteforce the keys
+var bruteforceY = Helper.BruteforceKey(g, p, computeY);
+Console.WriteLine($"PersonY bruteforced key: {bruteforceY}");
