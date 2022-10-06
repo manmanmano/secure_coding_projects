@@ -6,19 +6,19 @@ Console.WriteLine("Hello, Diffie Hellman!");
 // Check that input is an integer, if empty generate it 
 Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime();
-Console.WriteLine("The biggest possible prime in user defined range is: " + p);
+Console.WriteLine("The biggest possible prime in user defined range is " + p);
 
 Console.Write("Public key G (base number): ");
 var g = Helper.ValidateBase(p);
-Console.WriteLine("Base is: " + g);
+Console.WriteLine("Base is " + g);
 
 Console.Write("PersonX private key A: ");
 var akey = Helper.ValidateKey("PersonX", "A", p);
-Console.WriteLine("PersonX private key A is: " + akey);
+Console.WriteLine("PersonX private key A is " + akey);
 
-Console.Write("PersonY private key B: ");
+Console.Write("PersonY private key B ");
 var bkey = Helper.ValidateKey("PersonY", "B", p);
-Console.WriteLine("PersonY private key B is: " + bkey);
+Console.WriteLine("PersonY private key B is " + bkey);
 
 // // TODO: memory overflow (int cannot contain 5^15) 
 // // var computeX =  (long)Math.Pow(g, a)  % p;
