@@ -52,8 +52,8 @@ public class Helper
     private static int GenerateRandomPrime()
     {
         var rand = new Random();
-        var p = rand.Next(2, 1000);
-        for (; !IsPrime(p); p = rand.Next(2, 1000)){} 
+        var p = rand.Next(3, 1000);
+        for (; !IsPrime(p); p = rand.Next(3, 1000)){} 
         
         return p;
     }
@@ -144,15 +144,10 @@ public class Helper
                 Console.Write(personName + " private key " + keyName + ": ");
                 isValid = false;
             }
-            else if (key == p)
-            {
-                key = p - 1;
-                Console.WriteLine(personName + " private key " + keyName + " is equal to P, taking P - 1.");
-            }
             else if (key > p)
             {
                 key = ReduceKey(key, p);
-                Console.WriteLine(personName + " private key " + keyName + " is bigger than P, subtracting until key = P - 1");
+                Console.WriteLine(personName + " private key " + keyName + " is bigger than P, subtracting until key = P - 1. Key: " + key);
             }
         } while (isValid == false);
 
