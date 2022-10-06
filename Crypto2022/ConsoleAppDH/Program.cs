@@ -24,16 +24,13 @@ Console.WriteLine($"PersonX computed: {computeX}");
 
 var computeY = Helper.ComputeKey(g, bkey, p);
 Console.WriteLine($"PersonY computed: {computeY}");
-    
-var computeX2 = Helper.ComputeKey(g, bkey, p);
+
+var computeX2 = Helper.ComputeKey(computeY, akey, p);
 Console.WriteLine($"PersonX received {computeY} and computed: {computeX2}");
 
-var computeY2 = Helper.ComputeKey(g, bkey, p);
-Console.WriteLine($"PersonX received {computeY} and computed: {computeY2}");
-// 
-// // var computeY2 = (long) Math.Pow(computeX, b) % p;
-// var computeY2 = (long) BigInteger.ModPow(computeX, b, p);
-// Console.WriteLine($"PersonY received {computeX} and computed: {computeY2}");
+var computeY2 = Helper.ComputeKey(computeX, bkey, p);
+Console.WriteLine($"PersonY received {computeX} and computed: {computeY2}");
+
 
 // TODO: ModPow algorithm (normal int cannot contain 5^15)
 // TODO: Bruteforce the keys
