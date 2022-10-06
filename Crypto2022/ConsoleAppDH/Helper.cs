@@ -43,6 +43,30 @@ public class Helper
     }
 
 
+    private static int GenerateRandomPrime()
+    {
+        var rand = new Random();
+        var p = rand.Next(2, 1000);
+        for (; !IsPrime(p); p = rand.Next(2, 1000)){} 
+        
+        return p;
+    }
+    
+    
+    private static bool IsPrime(int p)
+    {
+        var isPrime = true;
+        for (var i = p - 1; i > 1; i--)
+        {
+            if (p % i != 0) continue;
+            isPrime = false;
+            break;
+        }
+
+        return isPrime;
+    }
+    
+    
     public static int ValidateBase(int p)
     {
         bool isValid;
@@ -77,6 +101,8 @@ public class Helper
                     {
                         g += p;
                     } while (g < 1);
+                    Console.WriteLine("Base negative, adding P until positive...");
+                    Console.WriteLine("Positive base is: " + g);
                     break;
             }
             
@@ -84,29 +110,44 @@ public class Helper
 
         return g;
     }
-    
-    
-    private static int GenerateRandomPrime()
-    {
-        var rand = new Random();
-        var p = rand.Next(2, 1000);
-        for (; !IsPrime(p); p = rand.Next(2, 1000)){} 
-        
-        return p;
-    }
-    
-    
-    private static bool IsPrime(int p)
-    {
-        var isPrime = true;
-        for (var i = p - 1; i > 1; i--)
-        {
-            if (p % i != 0) continue;
-            isPrime = false;
-            break;
-        }
 
-        return isPrime;
+
+    public static int ValidateKey(string personName, string keyName, int p)
+    {
+        bool isValid;
+        var key = 0;
+        do
+        {
+            isValid = true;
+
+            var input = Console.ReadLine()?.Trim();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine(personName + " private key " + keyName + " cannot be left blank!");
+                Console.Write(personName + " private key " + keyName + ": ");
+                isValid = false;
+            }
+            else if (!int.TryParse(input, out key) || key < 0)
+            {
+                Console.WriteLine(personName + " private key " + keyName + " must be a positive integer!");
+                Console.Write(personName + " private key " + keyName + ": ");
+                isValid = false;
+            }
+            else if (key is 0 or 1)
+            {
+                Console.WriteLine(personName + " private key " + keyName + " cannot be 0 nor 1!");
+                Console.Write(personName + " private key " + keyName + ": ");
+                isValid = false;
+            }
+            else if (key == p)
+            {
+                key = p - 1;
+                Console.WriteLine(personName + " private key " + keyName + " is equal to P, taking P - 1.");
+            }
+            
+        } while (isValid == false);
+
+        return key;
     }
-    
+
 }

@@ -10,10 +10,10 @@ Console.WriteLine("The biggest possible prime in user defined range is: " + p);
 
 Console.Write("Public key G (base number): ");
 var g = Helper.ValidateBase(p);
-// 
-// Console.Write("PersonX private key A: ");
-// var a = int.Parse(Console.ReadLine()?.Trim());
-// 
+
+Console.Write("PersonX private key A: ");
+var akey = Helper.ValidateKey("PersonX", "A", p);
+
 // Console.Write("PersonY private key B: ");
 // var b = int.Parse(Console.ReadLine()?.Trim());
 // 
