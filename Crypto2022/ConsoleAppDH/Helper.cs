@@ -154,4 +154,17 @@ public class Helper
         return key;
     }
 
+
+    public static int ComputeKey(int g, int key, int p)
+    {
+        var temp = g % p;
+        key -= 1;
+        while (key != 1)
+        {
+            temp = temp * g % p;
+            key -= 1;
+        }
+        
+        return temp * g % p;
+    }
 }

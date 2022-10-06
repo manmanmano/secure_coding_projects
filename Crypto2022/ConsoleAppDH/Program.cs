@@ -3,7 +3,6 @@
 
 Console.WriteLine("Hello, Diffie Hellman!");
 
-// Check that input is an integer, if empty generate it 
 Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime();
 Console.WriteLine("The biggest possible prime in user defined range is " + p);
@@ -16,10 +15,16 @@ Console.Write("PersonX private key A: ");
 var akey = Helper.ValidateKey("PersonX", "A", p);
 Console.WriteLine("PersonX private key A is " + akey);
 
-Console.Write("PersonY private key B ");
-var bkey = Helper.ValidateKey("PersonY", "B", p);
-Console.WriteLine("PersonY private key B is " + bkey);
+//Console.Write("PersonY private key B: ");
+//var bkey = Helper.ValidateKey("PersonY", "B", p);
+//Console.WriteLine("PersonY private key B is " + bkey);
 
+var computeX = Helper.ComputeKey(g, akey, p);
+Console.WriteLine($"PersonX computed: {computeX}");
+
+//var computeY = Helper.ComputeKey(g, bkey, p);
+//Console.WriteLine($"PersonY computed: {computeY}");
+    
 // // TODO: memory overflow (int cannot contain 5^15) 
 // // var computeX =  (long)Math.Pow(g, a)  % p;
 // // TODO: implement your own ModPow, using long/int
@@ -39,8 +44,5 @@ Console.WriteLine("PersonY private key B is " + bkey);
 // var computeY2 = (long) BigInteger.ModPow(computeX, b, p);
 // Console.WriteLine($"PersonY received {computeX} and computed: {computeY2}");
 
-
-// TODO: Prime number control
-// TODO: Prime number generator
 // TODO: ModPow algorithm (normal int cannot contain 5^15)
 // TODO: Bruteforce the keys
