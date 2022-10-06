@@ -24,10 +24,11 @@ public class Helper
                 Console.Write("Public key P (prime) [generate randomly]: ");
                 isValid = false;
             }
-            else if (p is 0 or 1)
+            else if (p < 3)
             {
-                // no 0 or 1
-                Console.WriteLine("P cannot be 0 nor 1!");
+                // no less or equal to two, cannot be two because key must always be p - 1, if p is 2 key cannot be p - 1
+                // because then it would be 1 and keys must be > 1
+                Console.WriteLine("P cannot be smaller than 2!");
                 Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
                 isValid = false;
             }
@@ -148,21 +149,34 @@ public class Helper
                 key = p - 1;
                 Console.WriteLine(personName + " private key " + keyName + " is equal to P, taking P - 1.");
             }
-            
+            else if (key > p)
+            {
+                key = ReduceKey(key, p);
+                Console.WriteLine(personName + " private key " + keyName + " is bigger than P, subtracting until key = P - 1");
+            }
         } while (isValid == false);
 
         return key;
     }
 
 
+    private static int ReduceKey(int key, int p)
+    {
+        while (p <= key)
+        {
+            key--;
+        }
+
+        return key;
+    }
+
     public static int ComputeKey(int g, int key, int p)
     {
         var temp = g % p;
         key -= 1;
-        while (key != 1)
+        for (; key > 1; key--)
         {
             temp = temp * g % p;
-            key -= 1;
         }
         
         return temp * g % p;
@@ -172,13 +186,11 @@ public class Helper
     public static int BruteforceKey(int g, int p, int result)
     {
         int userKey;
-        for (var key = 0; ; key++)
+        for (var key = 2; ; key++)
         {
-            if (ComputeKey(g, key, p) == result)
-            {
-                userKey = key;
-                break;
-            }
+            if (ComputeKey(g, key, p) != result) continue;
+            userKey = key;
+            break;
         }
 
         return userKey;
