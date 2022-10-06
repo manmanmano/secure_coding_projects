@@ -3,7 +3,7 @@
 
 Console.WriteLine("Hello, Diffie Hellman!");
 
-Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
+Console.Write("\nPublic key P (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime();
 Console.WriteLine("The biggest possible prime in user defined range: " + p);
 
@@ -28,8 +28,8 @@ Console.WriteLine($"PersonX received {computeY} and computed: {computeX2}");
 var computeY2 = Helper.ComputeKey(computeX, bkey, p);
 Console.WriteLine($"PersonY received {computeX} and computed: {computeY2}");
 
-var bruteforceX = Helper.BruteforceKey(g, p, computeX);
-Console.WriteLine($"\nPersonX bruteforced key: {bruteforceX}");
+var bruteforcedXKeys = Helper.BruteforceKey(g, p, computeX);
+Console.WriteLine($"\nPersonX bruteforced keys: {string.Join(" ", bruteforcedXKeys)}");
 
-var bruteforceY = Helper.BruteforceKey(g, p, computeY);
-Console.WriteLine($"PersonY bruteforced key: {bruteforceY}");
+var bruteforcedYKeys = Helper.BruteforceKey(g, p, computeY);
+Console.WriteLine($"PersonY bruteforced keys: {string.Join(" ", bruteforcedYKeys)}");

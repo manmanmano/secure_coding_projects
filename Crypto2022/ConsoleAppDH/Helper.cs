@@ -188,16 +188,15 @@ public class Helper
     }
 
 
-    public static int BruteforceKey(int g, int p, int result)
+    public static IEnumerable<int> BruteforceKey(int g, int p, int result)
     {
-        int userKey;
-        for (var key = 2; ; key++)
+        var userKeys = new List<int>();
+        for (var key = 2; key < p; key++)
         {
             if (ComputeKey(g, key, p) != result) continue;
-            userKey = key;
-            break;
+            userKeys.Add(key);
         }
 
-        return userKey;
+        return userKeys;
     }
 }
