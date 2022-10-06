@@ -14,6 +14,7 @@ public class Helper
             var input = Console.ReadLine()?.Trim();
             if (string.IsNullOrWhiteSpace(input))
             {
+                
                 return GenerateRandomPrime();
             }
             
@@ -27,12 +28,16 @@ public class Helper
             {
                 // no 0 or 1
                 Console.WriteLine("P cannot be 0 nor 1!");
-                Console.Write("Public key P (prime) [generate randomly]: ");
+                Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
                 isValid = false;
             }
             
         } while (isValid == false);
 
+        if (p < 0)
+        {
+            Console.WriteLine("P is negative! Taking its absolute value.");
+        }
         p = Math.Abs(p);
 
         if (IsPrime(p)) return p;
@@ -102,7 +107,6 @@ public class Helper
                         g += p;
                     } while (g < 1);
                     Console.WriteLine("Base negative, adding P until positive...");
-                    Console.WriteLine("Positive base is: " + g);
                     break;
             }
             
