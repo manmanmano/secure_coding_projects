@@ -9,7 +9,7 @@ var p = Helper.ValidatePrime();
 Console.WriteLine("The biggest possible prime in user defined range is: " + p);
 
 Console.Write("Public key G (base number): ");
-var g = Helper.ValidateInteger();
+var g = Helper.ValidateBase(p);
 // 
 // Console.Write("PersonX private key A: ");
 // var a = int.Parse(Console.ReadLine()?.Trim());

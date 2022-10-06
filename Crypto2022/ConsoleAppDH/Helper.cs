@@ -1,5 +1,6 @@
 namespace ConsoleAppDH;
 
+
 public class Helper
 {
     public static int ValidatePrime()
@@ -25,7 +26,7 @@ public class Helper
             else if (p is 0 or 1)
             {
                 // no 0 or 1
-                Console.WriteLine("P cannot be 0 or 1!");
+                Console.WriteLine("P cannot be 0 nor 1!");
                 Console.Write("Public key P (prime) [generate randomly]: ");
                 isValid = false;
             }
@@ -42,10 +43,48 @@ public class Helper
     }
 
 
-    public static int ValidateInteger()
+    public static int ValidateBase(int p)
     {
-        
+        bool isValid;
+        var g = 0;
+        do
+        { 
+            isValid = true;
+            
+            var input = Console.ReadLine()?.Trim();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Base cannot be left blank!");
+                Console.Write("Public key G (base number): ");
+                isValid = false;
+            }
+            else if (!int.TryParse(input, out g))
+            {
+                Console.WriteLine("Base must be an integer!");
+                Console.Write("Public key G (base number): ");
+                isValid = false;
+            }
+            else switch (g)
+            {
+                case 0 or 1:
+                    // no 0 or 1
+                    Console.WriteLine("Base cannot be 0 nor 1!");
+                    Console.Write("Public key G (base number): ");
+                    isValid = false;
+                    break;
+                case < 0:
+                    do
+                    {
+                        g += p;
+                    } while (g < 1);
+                    break;
+            }
+            
+        } while (isValid == false);
+
+        return g;
     }
+    
     
     private static int GenerateRandomPrime()
     {
