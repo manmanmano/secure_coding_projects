@@ -94,10 +94,20 @@ public class Helper
                 Console.Write("Public key G (base number): ");
                 isValid = false;
             }
+            else if (g > p)
+            {
+                g %= p;
+                Console.WriteLine("Base greater than P, doing Base modulo P. Base: " + g);
+            }
+            else if (g == p)
+            {
+                Console.WriteLine("Base cannot be equal to P!");
+                Console.Write("Public key G (base number): ");
+                isValid = false;
+            }
             else switch (g)
             {
                 case 0 or 1:
-                    // no 0 or 1
                     Console.WriteLine("Base cannot be 0 nor 1!");
                     Console.Write("Public key G (base number): ");
                     isValid = false;
