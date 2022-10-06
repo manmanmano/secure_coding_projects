@@ -15,30 +15,21 @@ Console.Write("PersonX private key A: ");
 var akey = Helper.ValidateKey("PersonX", "A", p);
 Console.WriteLine("PersonX private key A is " + akey);
 
-//Console.Write("PersonY private key B: ");
-//var bkey = Helper.ValidateKey("PersonY", "B", p);
-//Console.WriteLine("PersonY private key B is " + bkey);
+Console.Write("PersonY private key B: ");
+var bkey = Helper.ValidateKey("PersonY", "B", p);
+Console.WriteLine("PersonY private key B is " + bkey);
 
 var computeX = Helper.ComputeKey(g, akey, p);
 Console.WriteLine($"PersonX computed: {computeX}");
 
-//var computeY = Helper.ComputeKey(g, bkey, p);
-//Console.WriteLine($"PersonY computed: {computeY}");
+var computeY = Helper.ComputeKey(g, bkey, p);
+Console.WriteLine($"PersonY computed: {computeY}");
     
-// // TODO: memory overflow (int cannot contain 5^15) 
-// // var computeX =  (long)Math.Pow(g, a)  % p;
-// // TODO: implement your own ModPow, using long/int
-// var computeX = (long) BigInteger.ModPow(g, a,p);
-// Console.WriteLine($"PersonX computed: {computeX}");
-// 
-// // var computeY =  (long)Math.Pow(g, b)  % p;
-// var computeY = (long) BigInteger.ModPow(g, b,p);
-// 
-// Console.WriteLine($"PersonY computed: {computeY}");
-// 
-// // var computeX2 = (long) Math.Pow(computeY, a) % p;
-// var computeX2 = (long) BigInteger.ModPow(computeY, a, p);
-// Console.WriteLine($"PersonX received {computeY} and computed: {computeX2}");
+var computeX2 = Helper.ComputeKey(g, bkey, p);
+Console.WriteLine($"PersonX received {computeY} and computed: {computeX2}");
+
+var computeY2 = Helper.ComputeKey(g, bkey, p);
+Console.WriteLine($"PersonX received {computeY} and computed: {computeY2}");
 // 
 // // var computeY2 = (long) Math.Pow(computeX, b) % p;
 // var computeY2 = (long) BigInteger.ModPow(computeX, b, p);
