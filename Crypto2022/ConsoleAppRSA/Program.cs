@@ -7,12 +7,12 @@ Console.WriteLine("Hello, RSA!");
 
 // private key p
 Console.Write("\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
-var p = Helper.ValidatePrime();
+var p = Helper.ValidatePrime("p");
 Console.WriteLine("The biggest possible prime in user defined range: " + p);
 
 // private key q
 Console.Write("\nPrime q (prime, absolute value taken when negative) [generate randomly]: ");
-var q = Helper.ValidatePrime();
+var q = Helper.ValidatePrime("q", p);
 Console.WriteLine("The biggest possible prime in user defined range: " + q);
 
 // public key
@@ -20,17 +20,6 @@ var n = p * q;
 
 var m = (p - 1) * (q - 1);
 
-long e = 1;
-long gcd = 0;
-do
-{
-    e++;
-    gcd = Helper.Gcd(m, e);
-} while (gcd != 1 && e < m);
-
-if (e > m)
-{
-    throw new ApplicationException("e > m");
-}
+var e = Helper.CalculateEulers(m, 1);
 
 Console.Write($"e: {e}");

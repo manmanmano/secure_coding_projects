@@ -2,7 +2,26 @@ namespace ConsoleAppRSA;
 
 public class Helper
 {
-   public static long ValidatePrime()
+
+   public static long CalculateEulers(long m, long e)
+   {
+         long gcd;
+         do
+         {
+            e++;
+            gcd = Gcd(m, e);
+         } while (gcd != 1 && e < m);
+
+         if (e > m)
+         {
+            throw new ApplicationException("e > m");
+         }
+
+         return e;
+   }
+   
+   
+   public static long ValidatePrime(string prime, long q = 0)
    { 
       bool isValid;
       long p;
@@ -19,16 +38,20 @@ public class Helper
          
          if (!long.TryParse(input, out p))
          {
-            Console.WriteLine("P must be an integer!");
-            Console.Write("Public key P (prime) [generate randomly]: ");
+            Console.WriteLine(prime + " must be an integer!");
+            Console.Write("Public key " + prime + " (prime, absolute value taken when negative) [generate randomly]: ");
             isValid = false;
          }
          else if (p < 3)
          {
-            // no less or equal to two, cannot be two because key must always be p - 1, if p is 2 key cannot be p - 1
-            // because then it would be 1 and keys must be > 1
-            Console.WriteLine("P cannot be smaller than 2!");
-            Console.Write("Public key P (prime, absolute value taken when negative) [generate randomly]: ");
+            Console.WriteLine(prime + " cannot be smaller than 2!");
+            Console.Write("Public key " + prime + " (prime, absolute value taken when negative) [generate randomly]: ");
+            isValid = false;
+         }
+         else if (p == q)
+         {
+            Console.WriteLine("p and q cannot be equal!");
+            Console.Write("Public key " + prime + " (prime, absolute value taken when negative) [generate randomly]: ");
             isValid = false;
          }
             
@@ -36,7 +59,7 @@ public class Helper
 
       if (p < 0)
       {
-         Console.WriteLine("P is negative! Taking its absolute value.");
+         Console.WriteLine(prime + " is negative! Taking its absolute value.");
       }
       p = Math.Abs(p);
 
@@ -71,8 +94,8 @@ public class Helper
       return p;
    }
 
-   
-   public static long Gcd(long a, long b)
+
+   private static long Gcd(long a, long b)
    {
       return a == 0 ? b : Gcd(b % a, a);
    }
