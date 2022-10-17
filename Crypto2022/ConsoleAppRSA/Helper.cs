@@ -169,4 +169,26 @@ public class Helper
       return decryptedByteList;
    }
 
+   
+   public static List<long> BruteforcePrivateKeys(long n)
+   {
+      var privateKeys = new List<long>();
+      for (var i = 2; i < n; i++)
+      {
+         if (n % i == 0) privateKeys.Add(i);
+      }
+
+      return privateKeys;
+   }
+
+   
+   public static void DisplayLargePrimesWarning()
+   {
+      Console.Write("\n\n");
+      Console.WriteLine("################################################################################################");
+      Console.WriteLine("### WARNING - PRIMES SHOULD BE LARGE IN ORDER FOR RSA TO NOT BE TRIVIAL! CHOOSE THEM WISELY! ###");
+      Console.WriteLine("################################################################################################");
+
+   }
+   
 }

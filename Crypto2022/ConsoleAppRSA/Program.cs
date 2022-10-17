@@ -13,9 +13,7 @@ foreach (var b in plaintextBytes) Console.Write(b + " ");
 // convert plaintextBytes to long arraylist, bytes numbers will be to big for bytes type
 var byteList = plaintextBytes.Select(b => (long)b).ToList();
 
-Console.WriteLine("\n\n################################################################################################");
-Console.WriteLine("### WARNING - PRIMES SHOULD BE LARGE IN ORDER FOR RSA TO NOT BE TRIVIAL! CHOOSE THEM WISELY! ###");
-Console.WriteLine("################################################################################################");
+Helper.DisplayLargePrimesWarning();
 
 // private key p
 Console.Write("\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
@@ -47,3 +45,6 @@ foreach (var b in decryptedTextBytes) Console.Write(b + " ");
 
 var decryptedText = System.Text.Encoding.UTF8.GetString(decryptedTextBytes);
 Console.WriteLine("\n\nThe decrypted text: " + decryptedText);
+
+var bruteforcedKeys = Helper.BruteforcePrivateKeys(n);
+Console.WriteLine("\nBruteforced private keys are: " + string.Join(" ", bruteforcedKeys));
