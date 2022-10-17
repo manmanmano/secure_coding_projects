@@ -2,11 +2,11 @@
 
 Console.WriteLine("Hello, RSA!");
 
-Console.Write("Message: ");
+Console.Write("\nMessage: ");
 var plaintext = Helper.ValidatePlaintext();
 
 var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(plaintext!);
-Console.Write("\nPlaintext bytes: ");
+Console.Write("Plaintext bytes: ");
 // print out bytes of plaintext
 foreach (var b in plaintextBytes) Console.Write(b + " ");
 
@@ -14,7 +14,7 @@ foreach (var b in plaintextBytes) Console.Write(b + " ");
 var byteList = plaintextBytes.Select(b => (long)b).ToList();
 
 // private key p
-Console.Write("\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
+Console.Write("\n\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime("p");
 Console.WriteLine("The biggest possible prime in user defined range: " + p);
 
@@ -28,8 +28,8 @@ var n = p * q;
 
 var m = (p - 1) * (q - 1);
 var e = Helper.CalculateEulers(m, 1);
-Console.Write("Calculated e: " + e);
+Console.WriteLine("\nCalculated e: " + e);
 
 var encryptedTextBytes = Helper.EncryptText(byteList, e, n);
-Console.Write("Text bytes after encryption: ");
+Console.Write("\nText bytes after encryption: ");
 foreach (var b in encryptedTextBytes) Console.Write(b + " ");

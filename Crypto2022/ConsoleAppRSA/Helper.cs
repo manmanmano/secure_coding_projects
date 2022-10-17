@@ -123,12 +123,13 @@ public class Helper
 
    public static IEnumerable<long> EncryptText(List<long> byteList, long e, long n)
    {
+      var encryptedByteList = new List<long>();
       foreach (var b in byteList)
       {
-         EncryptByte(b, e, n);
+         encryptedByteList.Add(EncryptByte(b, e, n));
       }
 
-      return byteList;
+      return encryptedByteList;
    }
 
 
