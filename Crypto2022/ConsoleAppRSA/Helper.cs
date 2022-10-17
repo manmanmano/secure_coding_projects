@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace ConsoleAppRSA;
 
 public class Helper
@@ -119,8 +121,27 @@ public class Helper
    }
 
 
-   public static long EncryptText()
+   public static IEnumerable<long> EncryptText(List<long> byteList, long e, long n)
    {
-      return 0;
+      foreach (var b in byteList)
+      {
+         EncryptByte(b, e, n);
+      }
+
+      return byteList;
    }
+
+
+   private static long EncryptByte(long msg, long e, long n)
+   {
+      var temp = msg % n;
+      e -= 1;
+      for (; e > 1; e--)
+      {
+         temp = temp * msg % n;
+      }
+        
+      return temp * msg % n;
+   }
+   
 }
