@@ -160,7 +160,7 @@ public class Helper
    public static byte[] DecryptTextBytes(List<long> byteList, long d, long n)
    {
       var decryptedByteList = new byte[byteList.Count];
-      for (int i = 0; i < byteList.Count; i++)
+      for (var i = 0; i < byteList.Count; i++)
       {
          decryptedByteList[i] = (byte)ComputeModPow(byteList[i], d, n);
          
