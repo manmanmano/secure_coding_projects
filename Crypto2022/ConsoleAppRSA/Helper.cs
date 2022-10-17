@@ -2,25 +2,6 @@ namespace ConsoleAppRSA;
 
 public class Helper
 {
-
-   public static long CalculateEulers(long m, long e)
-   {
-         long gcd;
-         do
-         {
-            e++;
-            gcd = Gcd(m, e);
-         } while (gcd != 1 && e < m);
-
-         if (e > m)
-         {
-            throw new ApplicationException("e > m");
-         }
-
-         return e;
-   }
-   
-   
    public static long ValidatePrime(string prime, long q = 0)
    { 
       bool isValid;
@@ -94,9 +75,33 @@ public class Helper
       return p;
    }
 
+   
+   public static long CalculateEulers(long m, long e)
+   {
+         long gcd;
+         do
+         {
+            e++;
+            gcd = Gcd(m, e);
+         } while (gcd != 1 && e < m);
 
+         if (e > m)
+         {
+            throw new ApplicationException("e > m");
+         }
+
+         return e;
+   }
+
+   
    private static long Gcd(long a, long b)
    {
       return a == 0 ? b : Gcd(b % a, a);
+   }
+
+
+   public static long EncryptText()
+   {
+      return 0;
    }
 }

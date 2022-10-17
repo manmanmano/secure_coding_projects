@@ -2,9 +2,6 @@
 
 Console.WriteLine("Hello, RSA!");
 
-// TODO: validate inputs
-// TODO: check prime
-
 // private key p
 Console.Write("\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime("p");
@@ -19,7 +16,7 @@ Console.WriteLine("The biggest possible prime in user defined range: " + q);
 var n = p * q; 
 
 var m = (p - 1) * (q - 1);
-
 var e = Helper.CalculateEulers(m, 1);
+Console.Write("Calculated e: " + e);
 
-Console.Write($"e: {e}");
+var y = Helper.EncryptText();
