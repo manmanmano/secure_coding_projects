@@ -47,4 +47,5 @@ var decryptedText = System.Text.Encoding.UTF8.GetString(decryptedTextBytes);
 Console.WriteLine("\n\nThe decrypted text: " + decryptedText);
 
 var bruteforcedKeys = Helper.BruteforcePrivateKeys(n);
-Console.WriteLine("\nBruteforced private keys are: " + string.Join(" ", bruteforcedKeys));
+Console.WriteLine("\nTrying to bruteforce the private keys with given n...");
+Console.WriteLine("Bruteforced private keys are: " + string.Join(" ", bruteforcedKeys));
