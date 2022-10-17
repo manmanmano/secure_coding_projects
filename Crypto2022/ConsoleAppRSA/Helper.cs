@@ -118,20 +118,8 @@ public class Helper
       return a == 0 ? b : Gcd(b % a, a);
    }
 
-
-   public static List<long> EncryptText(List<long> byteList, long e, long n)
-   {
-      var encryptedByteList = new List<long>();
-      foreach (var b in byteList)
-      {
-         encryptedByteList.Add(EncryptByte(b, e, n));
-      }
-
-      return encryptedByteList;
-   }
-
-
-   private static long EncryptByte(long msg, long e, long n)
+   
+   private static long ComputeModPow(long msg, long e, long n)
    {
       var temp = msg % n;
       e -= 1;
@@ -143,6 +131,18 @@ public class Helper
       return temp * msg % n;
    }
 
+   
+   public static List<long> EncryptTextBytes(List<long> byteList, long e, long n)
+   {
+      var encryptedByteList = new List<long>();
+      foreach (var b in byteList)
+      {
+         encryptedByteList.Add(ComputeModPow(b, e, n));
+      }
+
+      return encryptedByteList;
+   }
+   
 
    public static long CalculateD(long m, long e, long k)
    {
@@ -157,10 +157,16 @@ public class Helper
    }
    
    
-   public static List<long> DecryptText(List<long> byteList, long d, long n)
+   public static byte[] DecryptTextBytes(List<long> byteList, long d, long n)
    {
+      var decryptedByteList = new byte[byteList.Count];
+      for (int i = 0; i < byteList.Count; i++)
+      {
+         decryptedByteList[i] = (byte)ComputeModPow(byteList[i], d, n);
+         
+      }
       
-      return byteList;
+      return decryptedByteList;
    }
-   
+
 }
