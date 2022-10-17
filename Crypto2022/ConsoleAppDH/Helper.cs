@@ -175,6 +175,7 @@ public class Helper
         return key;
     }
 
+
     public static int ComputeKey(int g, int key, int p)
     {
         var temp = g % p;
