@@ -31,9 +31,16 @@ Console.WriteLine("The biggest possible prime in user defined range: " + q);
 var n = p * q;
 
 var m = (p - 1) * (q - 1);
-var e = Helper.CalculateEulers(m, 1);
+var e = Helper.CalculateE(m, 1);
 Console.WriteLine("\nCalculated e: " + e);
 
 var encryptedTextBytes = Helper.EncryptText(byteList, e, n);
 Console.Write("\nText bytes after encryption: ");
 foreach (var b in encryptedTextBytes) Console.Write(b + " ");
+
+var d = Helper.CalculateD(m, e, 0);
+Console.WriteLine("\nCalculated d: " + d);
+
+var decryptedTextBytes = Helper.DecryptText(encryptedTextBytes, d, n);
+Console.Write("\nText bytes after decryption: ");
+foreach (var b in decryptedTextBytes) Console.Write(b + " ");

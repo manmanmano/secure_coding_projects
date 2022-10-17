@@ -1,5 +1,3 @@
-using System.Collections;
-
 namespace ConsoleAppRSA;
 
 public class Helper
@@ -17,7 +15,7 @@ public class Helper
             Console.Write("Plaintext cannot be an empty string!\nPlaintext: ");
             isEmpty = true;
          }
-      } while (isEmpty == true);
+      } while (isEmpty);
 
       return plaintext;
    }
@@ -97,7 +95,7 @@ public class Helper
    }
 
    
-   public static long CalculateEulers(long m, long e)
+   public static long CalculateE(long m, long e)
    {
          long gcd;
          do
@@ -121,7 +119,7 @@ public class Helper
    }
 
 
-   public static IEnumerable<long> EncryptText(List<long> byteList, long e, long n)
+   public static List<long> EncryptText(List<long> byteList, long e, long n)
    {
       var encryptedByteList = new List<long>();
       foreach (var b in byteList)
@@ -143,6 +141,26 @@ public class Helper
       }
         
       return temp * msg % n;
+   }
+
+
+   public static long CalculateD(long m, long e, long k)
+   {
+      double d;
+      do
+      {
+         d = (double)(1 + m * k) / e;
+         k++;
+      } while (d % e != 0);
+      
+      return (long)d;
+   }
+   
+   
+   public static List<long> DecryptText(List<long> byteList, long d, long n)
+   {
+      
+      return byteList;
    }
    
 }
