@@ -90,8 +90,8 @@ public class Helper
    private static long GenerateRandomPrime()
    {
       var rand = new Random();
-      var p = rand.Next(3, 1000);
-      for (; !IsPrime(p); p = rand.Next(3, 1000)){} 
+      var p = rand.Next(100, 10000);
+      for (; !IsPrime(p); p = rand.Next(100, 10000)){} 
         
       return p;
    }
