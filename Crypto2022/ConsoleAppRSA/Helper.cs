@@ -2,6 +2,25 @@ namespace ConsoleAppRSA;
 
 public class Helper
 {
+   public static string? ValidatePlaintext()
+   {
+      bool isEmpty;
+      string? plaintext;
+      do
+      {
+         plaintext = Console.ReadLine();
+         isEmpty = false;
+         if (string.IsNullOrWhiteSpace(plaintext))
+         {
+            Console.Write("Plaintext cannot be an empty string!\nPlaintext: ");
+            isEmpty = true;
+         }
+      } while (isEmpty == true);
+
+      return plaintext;
+   }
+   
+   
    public static long ValidatePrime(string prime, long q = 0)
    { 
       bool isValid;

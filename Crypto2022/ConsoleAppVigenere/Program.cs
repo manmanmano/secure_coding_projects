@@ -1,5 +1,7 @@
 ﻿using ConsoleAppVigenere;
 
+Console.WriteLine("Hello, Vigenere!");
+
 // check plaintext is not empty
 Console.Write("Plaintext: ");
 var plaintext = Helper.GetPlaintext();  

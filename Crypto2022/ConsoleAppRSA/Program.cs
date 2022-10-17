@@ -2,6 +2,9 @@
 
 Console.WriteLine("Hello, RSA!");
 
+Console.Write("Message: ");
+var plaintext = Helper.ValidatePlaintext();
+
 // private key p
 Console.Write("\nPrime p (prime, absolute value taken when negative) [generate randomly]: ");
 var p = Helper.ValidatePrime("p");
