@@ -11,5 +11,5 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
 
-    public DbSet<Caesars> Caesars { get; set; } = default!;
+    public DbSet<Caesar> Caesars { get; set; } = default!;
 }

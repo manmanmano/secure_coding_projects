@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using WebApp.Domain;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
     public class CaesarsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,8 +19,7 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: Caesars
-        [AllowAnonymous]
+        // GET: Caesar
         public async Task<IActionResult> Index()
         {
               return _context.Caesars != null ? 
@@ -59,15 +56,15 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesars caesars)
+        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(caesars);
+                _context.Add(caesar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(caesars);
+            return View(caesar);
         }
 
         // GET: Caesars/Edit/5
@@ -78,12 +75,12 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesars = await _context.Caesars.FindAsync(id);
-            if (caesars == null)
+            var caesar = await _context.Caesars.FindAsync(id);
+            if (caesar == null)
             {
                 return NotFound();
             }
-            return View(caesars);
+            return View(caesar);
         }
 
         // POST: Caesars/Edit/5
@@ -91,9 +88,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesars caesars)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
         {
-            if (id != caesars.Id)
+            if (id != caesar.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(caesars);
+                    _context.Update(caesar);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CaesarsExists(caesars.Id))
+                    if (!CaesarsExists(caesar.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +115,7 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(caesars);
+            return View(caesar);
         }
 
         // GET: Caesars/Delete/5
