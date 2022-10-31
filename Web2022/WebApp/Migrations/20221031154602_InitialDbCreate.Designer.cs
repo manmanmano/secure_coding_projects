@@ -11,7 +11,7 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221031152112_InitialDbCreate")]
+    [Migration("20221031154602_InitialDbCreate")]
     partial class InitialDbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -296,13 +296,13 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Domain.Caesar", b =>
                 {
-                    b.HasOne("WebApp.Domain.Identity.AppUser", "IdentityUser")
+                    b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
                         .WithMany("Caesars")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdentityUser");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("WebApp.Domain.Identity.AppUser", b =>

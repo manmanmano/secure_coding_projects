@@ -22,7 +22,7 @@ namespace WebApp.Controllers
         // GET: Caesars
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Caesars.Include(c => c.IdentityUser);
+            var applicationDbContext = _context.Caesars.Include(c => c.AppUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace WebApp.Controllers
             }
 
             var caesar = await _context.Caesars
-                .Include(c => c.IdentityUser)
+                .Include(c => c.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (caesar == null)
             {
@@ -131,7 +131,7 @@ namespace WebApp.Controllers
             }
 
             var caesar = await _context.Caesars
-                .Include(c => c.IdentityUser)
+                .Include(c => c.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (caesar == null)
             {

@@ -19,5 +19,5 @@ public class Caesar
     
     
     public string AppUserId { get; set; } = default!;
-    public AppUser? IdentityUser { get; set; }
+    public AppUser? AppUser { get; set; }
 }

@@ -294,13 +294,13 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Domain.Caesar", b =>
                 {
-                    b.HasOne("WebApp.Domain.Identity.AppUser", "IdentityUser")
+                    b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
                         .WithMany("Caesars")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdentityUser");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("WebApp.Domain.Identity.AppUser", b =>
