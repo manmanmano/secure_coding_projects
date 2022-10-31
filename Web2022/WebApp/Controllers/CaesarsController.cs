@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,10 +23,23 @@ namespace WebApp.Controllers
         // GET: Caesars
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Caesars.Include(c => c.AppUser);
+            var applicationDbContext = 
+                _context
+                    .Caesars
+                    .Where(c => c.AppUserId == GetLoggedInUserId())
+                    .Include(c => c.AppUser);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+        public string GetLoggedInUserId()
+        {
+           return User.Claims.First(cm => 
+               cm.Type == ClaimTypes.NameIdentifier).Value;
+        }
+        
+        
         // GET: Caesars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -77,7 +91,9 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars.FindAsync(id);
+            var caesar = await _context.Caesars
+                .SingleOrDefaultAsync(c => c.AppUserId == GetLoggedInUserId() && c.Id == id);
+            
             if (caesar == null)
             {
                 return NotFound();
