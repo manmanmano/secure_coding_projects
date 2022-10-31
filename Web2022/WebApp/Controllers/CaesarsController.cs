@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Domain;
@@ -14,12 +19,11 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: Caesar
+        // GET: Caesars
         public async Task<IActionResult> Index()
         {
-              return _context.Caesars != null ? 
-                          View(await _context.Caesars.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Caesars'  is null.");
+            var applicationDbContext = _context.Caesars.Include(c => c.IdentityUser);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Caesars/Details/5
@@ -30,19 +34,21 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesars = await _context.Caesars
+            var caesar = await _context.Caesars
+                .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (caesars == null)
+            if (caesar == null)
             {
                 return NotFound();
             }
 
-            return View(caesars);
+            return View(caesar);
         }
 
         // GET: Caesars/Create
         public IActionResult Create()
         {
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -51,7 +57,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
+        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext,AppUserId")] Caesar caesar)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +65,7 @@ namespace WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", caesar.AppUserId);
             return View(caesar);
         }
 
@@ -75,6 +82,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", caesar.AppUserId);
             return View(caesar);
         }
 
@@ -83,7 +91,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext,AppUserId")] Caesar caesar)
         {
             if (id != caesar.Id)
             {
@@ -99,7 +107,7 @@ namespace WebApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CaesarsExists(caesar.Id))
+                    if (!CaesarExists(caesar.Id))
                     {
                         return NotFound();
                     }
@@ -110,6 +118,7 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", caesar.AppUserId);
             return View(caesar);
         }
 
@@ -121,14 +130,15 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesars = await _context.Caesars
+            var caesar = await _context.Caesars
+                .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (caesars == null)
+            if (caesar == null)
             {
                 return NotFound();
             }
 
-            return View(caesars);
+            return View(caesar);
         }
 
         // POST: Caesars/Delete/5
@@ -140,17 +150,17 @@ namespace WebApp.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Caesars'  is null.");
             }
-            var caesars = await _context.Caesars.FindAsync(id);
-            if (caesars != null)
+            var caesar = await _context.Caesars.FindAsync(id);
+            if (caesar != null)
             {
-                _context.Caesars.Remove(caesars);
+                _context.Caesars.Remove(caesar);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CaesarsExists(int id)
+        private bool CaesarExists(int id)
         {
           return (_context.Caesars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
