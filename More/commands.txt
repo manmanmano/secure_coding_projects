@@ -1,7 +1,11 @@
-dotnet ef database drop
-
+1. Create new migration
 dotnet ef migrations add InitialDbCreate
 
+2. Drop the db
+dotnet ef database drop
+
+3. Update the db
 dotnet ef database update
 
+4. Regenerate controllers
 dotnet aspnet-codegenerator controller -name CaesarsController -actions -m Caesar -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
