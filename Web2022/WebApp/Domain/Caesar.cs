@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using WebApp.Domain.Identity;
 
 namespace WebApp.Domain;
 
@@ -17,6 +18,6 @@ public class Caesar
     public string Ciphertext { get; set; } = default!;
     
     
-    public string IdentityUserId { get; set; } = default!;
-    public IdentityUser? IdentityUser { get; set; }
+    public string AppUserId { get; set; } = default!;
+    public AppUser? IdentityUser { get; set; }
 }

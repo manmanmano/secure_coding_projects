@@ -4,5 +4,5 @@ using Microsoft.AspNetCore.Identity;
  
  public class AppUser : IdentityUser
  {
-     public ICollection<Caesar> Caesars { get; set;  } = default!;
+     public ICollection<Caesar>? Caesars { get; set;  } = default!;
  }
