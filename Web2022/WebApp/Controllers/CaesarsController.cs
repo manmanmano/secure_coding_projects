@@ -35,14 +35,14 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars
+            var caesars = await _context.Caesars
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (caesar == null)
+            if (caesars == null)
             {
                 return NotFound();
             }
 
-            return View(caesar);
+            return View(caesars);
         }
 
         // GET: Caesars/Create
@@ -56,15 +56,15 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
+        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesars caesars)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(caesar);
+                _context.Add(caesars);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(caesar);
+            return View(caesars);
         }
 
         // GET: Caesars/Edit/5
@@ -75,12 +75,12 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars.FindAsync(id);
-            if (caesar == null)
+            var caesars = await _context.Caesars.FindAsync(id);
+            if (caesars == null)
             {
                 return NotFound();
             }
-            return View(caesar);
+            return View(caesars);
         }
 
         // POST: Caesars/Edit/5
@@ -88,9 +88,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesar caesar)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext")] Caesars caesars)
         {
-            if (id != caesar.Id)
+            if (id != caesars.Id)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(caesar);
+                    _context.Update(caesars);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CaesarExists(caesar.Id))
+                    if (!CaesarsExists(caesars.Id))
                     {
                         return NotFound();
                     }
@@ -115,7 +115,7 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(caesar);
+            return View(caesars);
         }
 
         // GET: Caesars/Delete/5
@@ -126,14 +126,14 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars
+            var caesars = await _context.Caesars
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (caesar == null)
+            if (caesars == null)
             {
                 return NotFound();
             }
 
-            return View(caesar);
+            return View(caesars);
         }
 
         // POST: Caesars/Delete/5
@@ -145,17 +145,17 @@ namespace WebApp.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Caesars'  is null.");
             }
-            var caesar = await _context.Caesars.FindAsync(id);
-            if (caesar != null)
+            var caesars = await _context.Caesars.FindAsync(id);
+            if (caesars != null)
             {
-                _context.Caesars.Remove(caesar);
+                _context.Caesars.Remove(caesars);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CaesarExists(int id)
+        private bool CaesarsExists(int id)
         {
           return (_context.Caesars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
