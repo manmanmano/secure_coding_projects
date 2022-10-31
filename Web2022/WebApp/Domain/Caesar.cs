@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 namespace WebApp.Domain;
 
 // Generate crud pages
-// dotnet aspnet-codegenerator controller -name CaesarsController -actions -m Caesars -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
+// dotnet aspnet-codegenerator controller -name CaesarsController -actions -m Caesar -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
 
 public class Caesar
 {
