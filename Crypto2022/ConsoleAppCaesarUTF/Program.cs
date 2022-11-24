@@ -14,7 +14,7 @@ foreach (var b in plaintextBytes) Console.Write(b + " ");
 Console.WriteLine();
 var shiftAmount = Helper.ValidateShiftAmount();
 
-var shiftedBytes = Helper.EncryptBytes(plaintextBytes, shiftAmount);
+var shiftedBytes = Helper.ShiftBytes(plaintextBytes, shiftAmount);
 
 Console.Write("Bytes after shifting: ");
 // print out bytes of plaintext

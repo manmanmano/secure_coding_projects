@@ -51,7 +51,7 @@ public class Helper
         return shiftInInt;
     }
 
-    public static byte[] EncryptBytes(byte[] plaintextBytes, int shiftAmount)
+    public static byte[] ShiftBytes(byte[] plaintextBytes, int shiftAmount)
     {
         var encryptedBytes = new byte[plaintextBytes.Length];
         for (int i = 0; i < plaintextBytes.Length; i++)
