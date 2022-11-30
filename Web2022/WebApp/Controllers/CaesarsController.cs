@@ -128,6 +128,7 @@ namespace WebApp.Controllers
             }
 
             caesar.AppUserId = GetLoggedInUserId();
+            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
 
             // check that the user actually owns the data
             var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());

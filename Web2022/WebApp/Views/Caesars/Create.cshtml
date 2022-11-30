@@ -12,6 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <input type="hidden" asp-for="AppUserId" value="@Guid.Empty"/>
+            <input type="hidden" asp-for="Ciphertext" value="@Guid.Empty"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ShiftAmount" class="control-label"></label>
@@ -24,7 +25,6 @@
                 <span asp-validation-for="Plaintext" class="text-danger"></span>
             </div>
             <br>
-            <input type="hidden" asp-for="Ciphertext" value="@Guid.Empty"/>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
