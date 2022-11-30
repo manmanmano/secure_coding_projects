@@ -26,6 +26,13 @@ namespace WebApp.Controllers
         }
 
 
+        public string GetLoggedInUserId()
+        {
+            return User.Claims.First(cm =>
+                cm.Type == ClaimTypes.NameIdentifier).Value;
+        }
+        
+        
         // GET: Caesars
         public async Task<IActionResult> Index()
         {
@@ -39,16 +46,17 @@ namespace WebApp.Controllers
         }
 
 
-        public string GetLoggedInUserId()
-        {
-            return User.Claims.First(cm =>
-                cm.Type == ClaimTypes.NameIdentifier).Value;
-        }
-
-
         // GET: Caesars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
             if (id == null || _context.Caesars == null)
             {
                 return NotFound();
@@ -98,6 +106,14 @@ namespace WebApp.Controllers
         // GET: Caesars/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
             if (id == null || _context.Caesars == null)
             {
                 return NotFound();
@@ -122,14 +138,6 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Caesar caesar)
         {
-            if (id != caesar.Id)
-            {
-                return NotFound();
-            }
-
-            caesar.AppUserId = GetLoggedInUserId();
-            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
-
             // check that the user actually owns the data
             var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
 
@@ -137,6 +145,13 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+
+            if (id != caesar.Id)
+            {
+                return NotFound();
+            }
+
+            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
 
             if (ModelState.IsValid)
             {
@@ -169,6 +184,14 @@ namespace WebApp.Controllers
         // GET: Caesars/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+
             if (id == null || _context.Caesars == null)
             {
                 return NotFound();
@@ -191,6 +214,14 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+
             if (_context.Caesars == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Caesars'  is null.");
