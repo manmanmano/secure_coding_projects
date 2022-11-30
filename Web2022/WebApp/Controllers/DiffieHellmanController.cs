@@ -37,7 +37,7 @@ namespace WebApp.Controllers
         {
             var applicationDbContext = 
                 _context
-                    .DiffieHellman
+                    .DiffieHellman!
                     .Where(d => d.AppUserId == GetLoggedInUserId())
                     .Include(d => d.AppUser);
             
@@ -48,7 +48,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             // check that the user actually owns the data
-            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            var isOwned = await _context.DiffieHellman!.AnyAsync(d => d.Id == id && d.AppUserId == GetLoggedInUserId());
 
             if (!isOwned)
             {
@@ -116,7 +116,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             // check that the user actually owns the data
-            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            var isOwned = await _context.DiffieHellman!.AnyAsync(d => d.Id == id && d.AppUserId == GetLoggedInUserId());
 
             if (!isOwned)
             {
@@ -145,7 +145,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(int id, DiffieHellman diffieHellman)
         {
             // check that the user actually owns the data
-            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            var isOwned = await _context.DiffieHellman!.AnyAsync(d => d.Id == id && d.AppUserId == GetLoggedInUserId());
 
             if (!isOwned)
             {
@@ -199,7 +199,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             // check that the user actually owns the data
-            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            var isOwned = await _context.DiffieHellman!.AnyAsync(d => d.Id == id && d.AppUserId == GetLoggedInUserId());
 
             if (!isOwned)
             {
@@ -228,7 +228,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // check that the user actually owns the data
-            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            var isOwned = await _context.DiffieHellman!.AnyAsync(d => d.Id == id && d.AppUserId == GetLoggedInUserId());
 
             if (!isOwned)
             {
