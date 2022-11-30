@@ -5,9 +5,9 @@ public class DiffieHellmanHelper
     private static int GenerateRandomNum()
     {
         var rand = new Random();
-        var p = rand.Next(2, 500);
+        var n = rand.Next(2, 1000);
         
-        return p;
+        return n;
     }
     
     public static int ValidatePrime(int p)
@@ -65,7 +65,7 @@ public class DiffieHellmanHelper
             else switch (g)
             {
                 case 0 or 1:
-                    g = 2;
+                    g = GenerateRandomNum();
                     isValid = false;
                     break;
                 case < 0:
@@ -91,12 +91,12 @@ public class DiffieHellmanHelper
 
             if (key < 0)
             {
-                key = ;
+                key = Math.Abs(key);
                 isValid = false;
             }
             else if (key is 0 or 1)
             {
-                key = 2;
+                key = GenerateRandomNum();
                 isValid = false;
             }
             else if (key > p)

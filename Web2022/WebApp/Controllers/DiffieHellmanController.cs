@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Domain;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -86,8 +87,23 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DiffieHellman diffieHellman)
         {
+            int p = diffieHellman.PublicKeyP,
+                g = diffieHellman.PublicKeyG,
+                aprivate = diffieHellman.PrivateKeyA,
+                bprivate = diffieHellman.PrivateKeyB,
+                xcomputed = diffieHellman.ComputedKeyX,
+                ycomputed = diffieHellman.ComputedKeyY; 
+            
             diffieHellman.AppUserId = GetLoggedInUserId();
-
+            p = DiffieHellmanHelper.ValidatePrime(p);
+            g = DiffieHellmanHelper.ValidateBase(p, g);
+            aprivate = DiffieHellmanHelper.ValidateKey(p, aprivate);
+            bprivate = DiffieHellmanHelper.ValidateKey(p, bprivate);
+            xcomputed = DiffieHellmanHelper.ComputeKey(g, aprivate, p);
+            ycomputed = DiffieHellmanHelper.ComputeKey(g, bprivate, p);
+            xcomputed = DiffieHellmanHelper.ComputeKey(ycomputed, aprivate, p);
+            ycomputed = DiffieHellmanHelper.ComputeKey(xcomputed, bprivate, p);
+            
             if (ModelState.IsValid)
             {
                 _context.Add(diffieHellman);
@@ -138,7 +154,22 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
+            int p = diffieHellman.PublicKeyP,
+                g = diffieHellman.PublicKeyG,
+                aprivate = diffieHellman.PrivateKeyA,
+                bprivate = diffieHellman.PrivateKeyB,
+                xcomputed = diffieHellman.ComputedKeyX,
+                ycomputed = diffieHellman.ComputedKeyY; 
+            
             diffieHellman.AppUserId = GetLoggedInUserId();
+            p = DiffieHellmanHelper.ValidatePrime(p);
+            g = DiffieHellmanHelper.ValidateBase(p, g);
+            aprivate = DiffieHellmanHelper.ValidateKey(p, aprivate);
+            bprivate = DiffieHellmanHelper.ValidateKey(p, bprivate);
+            xcomputed = DiffieHellmanHelper.ComputeKey(g, aprivate, p);
+            ycomputed = DiffieHellmanHelper.ComputeKey(g, bprivate, p);
+            xcomputed = DiffieHellmanHelper.ComputeKey(ycomputed, aprivate, p);
+            ycomputed = DiffieHellmanHelper.ComputeKey(xcomputed, bprivate, p);
 
             if (id != diffieHellman.Id)
             {
@@ -229,3 +260,4 @@ namespace WebApp.Controllers
         }
     }
 }
+
