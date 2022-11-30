@@ -135,6 +135,8 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            
+            diffieHellman.AppUserId = GetLoggedInUserId();
 
             if (id != diffieHellman.Id)
             {
