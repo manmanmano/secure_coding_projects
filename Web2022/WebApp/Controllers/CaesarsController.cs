@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Domain;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CaesarsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -40,6 +43,7 @@ namespace WebApp.Controllers
         }
         
         
+        
         // GET: Caesars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -62,7 +66,6 @@ namespace WebApp.Controllers
         // GET: Caesars/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -71,15 +74,17 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ShiftAmount,Plaintext,Ciphertext,AppUserId")] Caesar caesar)
+        public async Task<IActionResult> Create(Caesar caesar)
         {
+            caesar.AppUserId = GetLoggedInUserId();
+            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
+            
             if (ModelState.IsValid)
             {
                 _context.Add(caesar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", caesar.AppUserId);
             return View(caesar);
         }
 
@@ -98,7 +103,6 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", caesar.AppUserId);
             return View(caesar);
         }
 
@@ -107,13 +111,22 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ShiftAmount,Plaintext,Ciphertext,AppUserId")] Caesar caesar)
+        public async Task<IActionResult> Edit(int id, Caesar caesar)
         {
             if (id != caesar.Id)
             {
                 return NotFound();
             }
 
+            caesar.AppUserId = GetLoggedInUserId();
+
+            // check that the user actually owns the data
+            var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
             if (ModelState.IsValid)
             {
                 try
@@ -182,3 +195,4 @@ namespace WebApp.Controllers
         }
     }
 }
+
