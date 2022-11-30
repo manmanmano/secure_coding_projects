@@ -2,6 +2,14 @@ namespace WebApp.Helpers;
 
 public class DiffieHellmanHelper
 {
+    private static int GenerateRandomNum()
+    {
+        var rand = new Random();
+        var p = rand.Next(2, 500);
+        
+        return p;
+    }
+    
     public static int ValidatePrime(int p)
     {
         if (p < 0)
@@ -47,18 +55,17 @@ public class DiffieHellmanHelper
             if (g > p)
             {
                 g %= p;
+                isValid = false;
             }
             else if (g == p)
             {
-                Console.WriteLine("Base cannot be equal to P!");
-                Console.Write("Public key G (base number): ");
+                g -= 1;
                 isValid = false;
             }
             else switch (g)
             {
                 case 0 or 1:
-                    Console.WriteLine("Base cannot be 0 nor 1!");
-                    Console.Write("Public key G (base number): ");
+                    g = 2;
                     isValid = false;
                     break;
                 case < 0:
@@ -66,7 +73,6 @@ public class DiffieHellmanHelper
                     {
                         g += p;
                     } while (g < 1);
-                    Console.WriteLine("Base negative, adding P until positive...");
                     break;
             }
             
@@ -76,37 +82,26 @@ public class DiffieHellmanHelper
     }
 
 
-    public static int ValidateKey(string personName, string keyName, int p)
+    public static int ValidateKey(int p, int key)
     {
         bool isValid;
-        var key = 0;
         do
         {
             isValid = true;
 
-            var input = Console.ReadLine()?.Trim();
-            if (string.IsNullOrWhiteSpace(input))
+            if (key < 0)
             {
-                Console.WriteLine(personName + " private key " + keyName + " cannot be left blank!");
-                Console.Write(personName + " private key " + keyName + ": ");
-                isValid = false;
-            }
-            else if (!int.TryParse(input, out key) || key < 0)
-            {
-                Console.WriteLine(personName + " private key " + keyName + " must be a positive integer!");
-                Console.Write(personName + " private key " + keyName + ": ");
+                key = ;
                 isValid = false;
             }
             else if (key is 0 or 1)
             {
-                Console.WriteLine(personName + " private key " + keyName + " cannot be 0 nor 1!");
-                Console.Write(personName + " private key " + keyName + ": ");
+                key = 2;
                 isValid = false;
             }
             else if (key > p)
             {
                 key = ReduceKey(key, p);
-                Console.WriteLine(personName + " private key " + keyName + " is bigger than P, subtracting until key = P - 1. Key: " + key);
             }
         } while (isValid == false);
 
