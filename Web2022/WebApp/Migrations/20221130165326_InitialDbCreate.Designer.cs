@@ -11,7 +11,7 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221130154014_InitialDbCreate")]
+    [Migration("20221130165326_InitialDbCreate")]
     partial class InitialDbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,41 @@ namespace WebApp.Migrations
                     b.ToTable("Caesars");
                 });
 
+            modelBuilder.Entity("WebApp.Domain.DiffieHellman", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ComputedKeyX")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ComputedKeyY")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrivateKeyA")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrivateKeyB")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PublicKeyG")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PublicKeyP")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("DiffieHellman");
+                });
+
             modelBuilder.Entity("WebApp.Domain.Identity.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -298,6 +333,17 @@ namespace WebApp.Migrations
                 {
                     b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
                         .WithMany("Caesars")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("WebApp.Domain.DiffieHellman", b =>
+                {
+                    b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

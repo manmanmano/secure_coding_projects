@@ -176,6 +176,31 @@ namespace WebApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DiffieHellman",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PublicKeyP = table.Column<int>(type: "INTEGER", nullable: false),
+                    PublicKeyG = table.Column<int>(type: "INTEGER", nullable: false),
+                    PrivateKeyA = table.Column<int>(type: "INTEGER", nullable: false),
+                    PrivateKeyB = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComputedKeyX = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComputedKeyY = table.Column<int>(type: "INTEGER", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiffieHellman", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiffieHellman_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -217,6 +242,11 @@ namespace WebApp.Migrations
                 name: "IX_Caesars_AppUserId",
                 table: "Caesars",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiffieHellman_AppUserId",
+                table: "DiffieHellman",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -238,6 +268,9 @@ namespace WebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Caesars");
+
+            migrationBuilder.DropTable(
+                name: "DiffieHellman");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
