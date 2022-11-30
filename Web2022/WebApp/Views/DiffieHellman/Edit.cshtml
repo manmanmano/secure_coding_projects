@@ -12,8 +12,6 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <input type="hidden" asp-for="AppUserId" value="@Guid.Empty"/>
-            <input type="hidden" asp-for="ComputedKeyX" value="@Guid.Empty"/>
-            <input type="hidden" asp-for="ComputedKeyY" value="@Guid.Empty"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">

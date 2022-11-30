@@ -190,7 +190,13 @@ namespace WebApp.Migrations
                     b.Property<int>("ComputedKeyX")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ComputedKeyX2")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ComputedKeyY")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ComputedKeyY2")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PrivateKeyA")

@@ -37,7 +37,7 @@ namespace WebApp.Controllers
         {
             var applicationDbContext = 
                 _context
-                    .DiffieHellman!
+                    .DiffieHellman
                     .Where(d => d.AppUserId == GetLoggedInUserId())
                     .Include(d => d.AppUser);
             
@@ -87,22 +87,20 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DiffieHellman diffieHellman)
         {
-            int p = diffieHellman.PublicKeyP,
-                g = diffieHellman.PublicKeyG,
-                aprivate = diffieHellman.PrivateKeyA,
-                bprivate = diffieHellman.PrivateKeyB,
-                xcomputed = diffieHellman.ComputedKeyX,
-                ycomputed = diffieHellman.ComputedKeyY; 
-            
+
             diffieHellman.AppUserId = GetLoggedInUserId();
-            p = DiffieHellmanHelper.ValidatePrime(p);
-            g = DiffieHellmanHelper.ValidateBase(p, g);
-            aprivate = DiffieHellmanHelper.ValidateKey(p, aprivate);
-            bprivate = DiffieHellmanHelper.ValidateKey(p, bprivate);
-            xcomputed = DiffieHellmanHelper.ComputeKey(g, aprivate, p);
-            ycomputed = DiffieHellmanHelper.ComputeKey(g, bprivate, p);
-            xcomputed = DiffieHellmanHelper.ComputeKey(ycomputed, aprivate, p);
-            ycomputed = DiffieHellmanHelper.ComputeKey(xcomputed, bprivate, p);
+            
+            diffieHellman.PublicKeyP = DiffieHellmanHelper.ValidatePrime(diffieHellman.PublicKeyP);
+            diffieHellman.PublicKeyG = DiffieHellmanHelper.ValidateBase(diffieHellman.PublicKeyP, diffieHellman.PublicKeyG);
+            
+            diffieHellman.PrivateKeyA = DiffieHellmanHelper.ValidateKey(diffieHellman.PublicKeyP, diffieHellman.PrivateKeyA);
+            diffieHellman.PrivateKeyB = DiffieHellmanHelper.ValidateKey(diffieHellman.PublicKeyP, diffieHellman.PrivateKeyB);
+            
+            diffieHellman.ComputedKeyX = DiffieHellmanHelper.ComputeKey(diffieHellman.PublicKeyG, diffieHellman.PrivateKeyA, diffieHellman.PublicKeyP);
+            diffieHellman.ComputedKeyY = DiffieHellmanHelper.ComputeKey(diffieHellman.PublicKeyG, diffieHellman.PrivateKeyB, diffieHellman.PublicKeyP);
+            
+            diffieHellman.ComputedKeyX2 = DiffieHellmanHelper.ComputeKey(diffieHellman.ComputedKeyY, diffieHellman.PrivateKeyA, diffieHellman.PublicKeyP);
+            diffieHellman.ComputedKeyY2 = DiffieHellmanHelper.ComputeKey(diffieHellman.ComputedKeyX, diffieHellman.PrivateKeyB, diffieHellman.PublicKeyP);
             
             if (ModelState.IsValid)
             {
@@ -153,24 +151,21 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
-            int p = diffieHellman.PublicKeyP,
-                g = diffieHellman.PublicKeyG,
-                aprivate = diffieHellman.PrivateKeyA,
-                bprivate = diffieHellman.PrivateKeyB,
-                xcomputed = diffieHellman.ComputedKeyX,
-                ycomputed = diffieHellman.ComputedKeyY; 
-            
-            diffieHellman.AppUserId = GetLoggedInUserId();
-            p = DiffieHellmanHelper.ValidatePrime(p);
-            g = DiffieHellmanHelper.ValidateBase(p, g);
-            aprivate = DiffieHellmanHelper.ValidateKey(p, aprivate);
-            bprivate = DiffieHellmanHelper.ValidateKey(p, bprivate);
-            xcomputed = DiffieHellmanHelper.ComputeKey(g, aprivate, p);
-            ycomputed = DiffieHellmanHelper.ComputeKey(g, bprivate, p);
-            xcomputed = DiffieHellmanHelper.ComputeKey(ycomputed, aprivate, p);
-            ycomputed = DiffieHellmanHelper.ComputeKey(xcomputed, bprivate, p);
 
+            diffieHellman.AppUserId = GetLoggedInUserId();
+            
+            diffieHellman.PublicKeyP = DiffieHellmanHelper.ValidatePrime(diffieHellman.PublicKeyP);
+            diffieHellman.PublicKeyG = DiffieHellmanHelper.ValidateBase(diffieHellman.PublicKeyP, diffieHellman.PublicKeyG);
+            
+            diffieHellman.PrivateKeyA = DiffieHellmanHelper.ValidateKey(diffieHellman.PublicKeyP, diffieHellman.PrivateKeyA);
+            diffieHellman.PrivateKeyB = DiffieHellmanHelper.ValidateKey(diffieHellman.PublicKeyP, diffieHellman.PrivateKeyB);
+            
+            diffieHellman.ComputedKeyX = DiffieHellmanHelper.ComputeKey(diffieHellman.PublicKeyG, diffieHellman.PrivateKeyA, diffieHellman.PublicKeyP);
+            diffieHellman.ComputedKeyY = DiffieHellmanHelper.ComputeKey(diffieHellman.PublicKeyG, diffieHellman.PrivateKeyB, diffieHellman.PublicKeyP);
+            
+            diffieHellman.ComputedKeyX2 = DiffieHellmanHelper.ComputeKey(diffieHellman.ComputedKeyY, diffieHellman.PrivateKeyA, diffieHellman.PublicKeyP);
+            diffieHellman.ComputedKeyY2 = DiffieHellmanHelper.ComputeKey(diffieHellman.ComputedKeyX, diffieHellman.PrivateKeyB, diffieHellman.PublicKeyP);
+            
             if (id != diffieHellman.Id)
             {
                 return NotFound();

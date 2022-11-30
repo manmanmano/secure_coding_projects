@@ -16,6 +16,8 @@ public class DiffieHellman
     public int  PrivateKeyB { get; set; }
     public int ComputedKeyX { get; set; }
     public int ComputedKeyY { get; set; }
+    public int ComputedKeyX2 { get; set; }
+    public int ComputedKeyY2 { get; set; }
     
     
     public string AppUserId { get; set; } = default!;

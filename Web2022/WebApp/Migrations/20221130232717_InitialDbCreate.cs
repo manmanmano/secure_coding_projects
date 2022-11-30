@@ -188,6 +188,8 @@ namespace WebApp.Migrations
                     PrivateKeyB = table.Column<int>(type: "INTEGER", nullable: false),
                     ComputedKeyX = table.Column<int>(type: "INTEGER", nullable: false),
                     ComputedKeyY = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComputedKeyX2 = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComputedKeyY2 = table.Column<int>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

@@ -11,7 +11,7 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221130165326_InitialDbCreate")]
+    [Migration("20221130232717_InitialDbCreate")]
     partial class InitialDbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,7 +192,13 @@ namespace WebApp.Migrations
                     b.Property<int>("ComputedKeyX")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ComputedKeyX2")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ComputedKeyY")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ComputedKeyY2")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PrivateKeyA")

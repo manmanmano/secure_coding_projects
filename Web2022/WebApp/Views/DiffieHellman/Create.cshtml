@@ -12,32 +12,29 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <input type="hidden" asp-for="AppUserId" value="@Guid.Empty"/>
-            <input type="hidden" asp-for="ComputedKeyX" value="@Guid.Empty"/>
-            <input type="hidden" asp-for="ComputedKeyY" value="@Guid.Empty"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PublicKeyP" class="control-label"></label>
-                <input asp-for="PublicKeyP" class="form-control"/>
+                <input asp-for="PublicKeyP" class="form-control" />
                 <span asp-validation-for="PublicKeyP" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PublicKeyG" class="control-label"></label>
-                <input asp-for="PublicKeyG" class="form-control"/>
+                <input asp-for="PublicKeyG" class="form-control" />
                 <span asp-validation-for="PublicKeyG" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrivateKeyA" class="control-label"></label>
-                <input asp-for="PrivateKeyA" class="form-control"/>
+                <input asp-for="PrivateKeyA" class="form-control" />
                 <span asp-validation-for="PrivateKeyA" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrivateKeyB" class="control-label"></label>
-                <input asp-for="PrivateKeyB" class="form-control"/>
+                <input asp-for="PrivateKeyB" class="form-control" />
                 <span asp-validation-for="PrivateKeyB" class="text-danger"></span>
             </div>
-            <br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
