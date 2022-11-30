@@ -1,0 +1,71 @@
+@model IEnumerable<WebApp.Domain.DiffieHellman>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PublicKeyP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublicKeyG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrivateKeyA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrivateKeyB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComputedKeyX)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComputedKeyY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicKeyP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicKeyG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrivateKeyA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrivateKeyB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComputedKeyX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComputedKeyY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -3,29 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Domain;
-using WebApp.Helpers;
-
 
 namespace WebApp.Controllers
 {
-    [Authorize]
-    public class CaesarsController : Controller
+    public class DiffieHellmanController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-
-        public CaesarsController(ApplicationDbContext context)
+        
+        public DiffieHellmanController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
+        
         public string GetLoggedInUserId()
         {
             return User.Claims.First(cm =>
@@ -33,20 +29,19 @@ namespace WebApp.Controllers
         }
         
         
-        // GET: Caesars
+        // GET: DiffieHellman
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext =
+            var applicationDbContext = 
                 _context
-                    .Caesars
-                    .Where(c => c.AppUserId == GetLoggedInUserId())
-                    .Include(c => c.AppUser);
-
+                    .DiffieHellman!
+                    .Where(d => d.AppUserId == GetLoggedInUserId())
+                    .Include(d => d.AppUser);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
-
-        // GET: Caesars/Details/5
+        // GET: DiffieHellman/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             // check that the user actually owns the data
@@ -57,53 +52,51 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
-            if (id == null || _context.Caesars == null)
+            if (id == null || _context.DiffieHellman == null)
             {
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars
-                .Include(c => c.AppUser)
+            var diffieHellman = await _context.DiffieHellman
+                .Include(d => d.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (caesar == null)
+            
+            if (diffieHellman == null)
             {
                 return NotFound();
             }
 
-            return View(caesar);
+            return View(diffieHellman);
         }
 
-
-        // GET: Caesars/Create
+        
+        // GET: DiffieHellman/Create
         public IActionResult Create()
         {
             return View();
         }
 
-
-        // POST: Caesars/Create
+        
+        // POST: DiffieHellman/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Caesar caesar)
+        public async Task<IActionResult> Create(DiffieHellman diffieHellman)
         {
-            caesar.AppUserId = GetLoggedInUserId();
-            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
+            diffieHellman.AppUserId = GetLoggedInUserId();
 
             if (ModelState.IsValid)
             {
-                _context.Add(caesar);
+                _context.Add(diffieHellman);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(caesar);
+            
+            return View(diffieHellman);
         }
 
-
-        // GET: Caesars/Edit/5
+        // GET: DiffieHellman/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             // check that the user actually owns the data
@@ -114,29 +107,26 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
-            if (id == null || _context.Caesars == null)
+            if (id == null || _context.DiffieHellman == null)
             {
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars
-                .SingleOrDefaultAsync(c => c.AppUserId == GetLoggedInUserId() && c.Id == id);
-
-            if (caesar == null)
+            var diffieHellman = await _context.DiffieHellman.FindAsync(id);
+            if (diffieHellman == null)
             {
                 return NotFound();
             }
-
-            return View(caesar);
+            
+            return View(diffieHellman);
         }
 
-
-        // POST: Caesars/Edit/5
+        // POST: DiffieHellman/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Caesar caesar)
+        public async Task<IActionResult> Edit(int id, DiffieHellman diffieHellman)
         {
             // check that the user actually owns the data
             var isOwned = await _context.Caesars.AnyAsync(c => c.Id == id && c.AppUserId == GetLoggedInUserId());
@@ -146,24 +136,21 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            if (id != caesar.Id)
+            if (id != diffieHellman.Id)
             {
                 return NotFound();
             }
-
-            caesar.AppUserId = GetLoggedInUserId();
-            caesar.Ciphertext = CaesarHelper.EncryptText(caesar.Plaintext, caesar.ShiftAmount);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(caesar);
+                    _context.Update(diffieHellman);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CaesarExists(caesar.Id))
+                    if (!DiffieHellmanExists(diffieHellman.Id))
                     {
                         return NotFound();
                     }
@@ -172,15 +159,13 @@ namespace WebApp.Controllers
                         throw;
                     }
                 }
-
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(caesar);
+            
+            return View(diffieHellman);
         }
 
-        
-        // GET: Caesars/Delete/5
+        // GET: DiffieHellman/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             // check that the user actually owns the data
@@ -191,24 +176,23 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            if (id == null || _context.Caesars == null)
+            if (id == null || _context.DiffieHellman == null)
             {
                 return NotFound();
             }
 
-            var caesar = await _context.Caesars
-                .Include(c => c.AppUser)
+            var diffieHellman = await _context.DiffieHellman
+                .Include(d => d.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (caesar == null)
+            if (diffieHellman == null)
             {
                 return NotFound();
             }
 
-            return View(caesar);
+            return View(diffieHellman);
         }
 
-        
-        // POST: Caesars/Delete/5
+        // POST: DiffieHellman/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -221,27 +205,23 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            if (_context.Caesars == null)
+            if (_context.DiffieHellman == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Caesars'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.DiffieHellman'  is null.");
             }
-
-            var caesar = await _context.Caesars.FindAsync(id);
+            var diffieHellman = await _context.DiffieHellman.FindAsync(id);
+            if (diffieHellman != null)
+            {
+                _context.DiffieHellman.Remove(diffieHellman);
+            }
             
-            if (caesar != null)
-            {
-                _context.Caesars.Remove(caesar);
-            }
-
             await _context.SaveChangesAsync();
-            
             return RedirectToAction(nameof(Index));
         }
 
-        
-        private bool CaesarExists(int id)
+        private bool DiffieHellmanExists(int id)
         {
-            return (_context.Caesars?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.DiffieHellman?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

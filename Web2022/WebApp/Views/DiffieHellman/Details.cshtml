@@ -1,0 +1,60 @@
+@model WebApp.Domain.DiffieHellman
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DiffieHellman</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PublicKeyP)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PublicKeyP)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PublicKeyG)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PublicKeyG)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrivateKeyA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrivateKeyA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrivateKeyB)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrivateKeyB)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ComputedKeyX)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ComputedKeyX)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ComputedKeyY)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ComputedKeyY)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

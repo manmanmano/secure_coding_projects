@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Domain;
@@ -14,4 +14,6 @@ public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole, str
     }
 
     public DbSet<Caesar> Caesars { get; set; } = default!;
+
+    public DbSet<WebApp.Domain.DiffieHellman>? DiffieHellman { get; set; }
 }
