@@ -316,6 +316,9 @@ namespace WebApp.Migrations
                     b.Property<long>("PrimeQ")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("PublicKeyN")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");

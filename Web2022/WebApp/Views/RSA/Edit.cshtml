@@ -11,17 +11,15 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <input type="hidden" asp-for="AppUserId" value="@Guid.Empty"/>
+            <input type="hidden" asp-for="EncryptedBytes" value="@Guid.Empty"/>
+            <input type="hidden" asp-for="PlaintextBytes" value="@Guid.Empty"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Plaintext" class="control-label"></label>
                 <input asp-for="Plaintext" class="form-control" />
                 <span asp-validation-for="Plaintext" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlaintextBytes" class="control-label"></label>
-                <input asp-for="PlaintextBytes" class="form-control" />
-                <span asp-validation-for="PlaintextBytes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrimeP" class="control-label"></label>
@@ -34,25 +32,11 @@
                 <span asp-validation-for="PrimeQ" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Modulus" class="control-label"></label>
-                <input asp-for="Modulus" class="form-control" />
-                <span asp-validation-for="Modulus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Exponent" class="control-label"></label>
-                <input asp-for="Exponent" class="form-control" />
-                <span asp-validation-for="Exponent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="EncryptedBytes" class="control-label"></label>
                 <input asp-for="EncryptedBytes" class="form-control" />
                 <span asp-validation-for="EncryptedBytes" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
-                <span asp-validation-for="AppUserId" class="text-danger"></span>
-            </div>
+            <br>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

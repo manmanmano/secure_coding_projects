@@ -11,7 +11,7 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221201002958_InitialDbCreate")]
+    [Migration("20221201010925_InitialDbCreate")]
     partial class InitialDbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -316,6 +316,9 @@ namespace WebApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("PrimeQ")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("PublicKeyN")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

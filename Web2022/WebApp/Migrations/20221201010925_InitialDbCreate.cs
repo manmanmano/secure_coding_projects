@@ -213,6 +213,7 @@ namespace WebApp.Migrations
                     PlaintextBytes = table.Column<string>(type: "TEXT", nullable: false),
                     PrimeP = table.Column<long>(type: "INTEGER", nullable: false),
                     PrimeQ = table.Column<long>(type: "INTEGER", nullable: false),
+                    PublicKeyN = table.Column<long>(type: "INTEGER", nullable: false),
                     Modulus = table.Column<long>(type: "INTEGER", nullable: false),
                     Exponent = table.Column<long>(type: "INTEGER", nullable: false),
                     EncryptedBytes = table.Column<string>(type: "TEXT", nullable: false),
