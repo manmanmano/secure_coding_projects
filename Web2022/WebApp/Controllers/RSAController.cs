@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Domain;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -84,6 +85,19 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RSA rsa)
         {
+            rsa.AppUserId = GetLoggedInUserId();
+            
+            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(rsa.Plaintext);
+            var longBytes = plaintextBytes.Select(b => (long)b).ToList();
+            rsa.PlaintextBytes = string.Join(" ", plaintextBytes);
+            rsa.PrimeP = RSAHelper.ValidateP(rsa.PrimeP);
+            rsa.PrimeQ = RSAHelper.ValidateQ(rsa.PrimeP, rsa.PrimeQ);
+            rsa.PublicKeyN = rsa.PrimeP * rsa.PrimeQ;
+            rsa.Modulus = (rsa.PrimeP - 1) * (rsa.PrimeQ - 1);
+            rsa.Exponent = RSAHelper.CalculateE(rsa.Modulus, 1);
+
+            rsa.EncryptedBytes = RSAHelper.EncryptTextBytes(longBytes, rsa.Exponent, rsa.PublicKeyN);
+
             if (ModelState.IsValid)
             {
                 _context.Add(rsa);

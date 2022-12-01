@@ -296,24 +296,24 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Exponent")
+                    b.Property<long>("Exponent")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Modulus")
+                    b.Property<long>("Modulus")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Plaintext")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("PlaintextBytes")
+                    b.Property<string>("PlaintextBytes")
                         .IsRequired()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("PrimeP")
+                    b.Property<long>("PrimeP")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PrimeQ")
+                    b.Property<long>("PrimeQ")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

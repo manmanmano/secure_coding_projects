@@ -210,11 +210,11 @@ namespace WebApp.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Plaintext = table.Column<string>(type: "TEXT", nullable: false),
-                    PlaintextBytes = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    PrimeP = table.Column<int>(type: "INTEGER", nullable: false),
-                    PrimeQ = table.Column<int>(type: "INTEGER", nullable: false),
-                    Modulus = table.Column<int>(type: "INTEGER", nullable: false),
-                    Exponent = table.Column<int>(type: "INTEGER", nullable: false),
+                    PlaintextBytes = table.Column<string>(type: "TEXT", nullable: false),
+                    PrimeP = table.Column<long>(type: "INTEGER", nullable: false),
+                    PrimeQ = table.Column<long>(type: "INTEGER", nullable: false),
+                    Modulus = table.Column<long>(type: "INTEGER", nullable: false),
+                    Exponent = table.Column<long>(type: "INTEGER", nullable: false),
                     EncryptedBytes = table.Column<string>(type: "TEXT", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
