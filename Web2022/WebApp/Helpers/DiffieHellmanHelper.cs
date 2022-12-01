@@ -2,7 +2,7 @@ namespace WebApp.Helpers;
 
 public class DiffieHellmanHelper
 {
-    private static int GenerateRandomNum()
+    private static long GenerateRandomNum()
     {
         var rand = new Random();
         var n = rand.Next(2, 1000);
@@ -10,7 +10,7 @@ public class DiffieHellmanHelper
         return n;
     }
     
-    public static int ValidatePrime(int p)
+    public static long ValidatePrime(long p)
     {
         if (p < 0)
         { 
@@ -32,7 +32,7 @@ public class DiffieHellmanHelper
     }
 
     
-    private static bool IsPrime(int p)
+    private static bool IsPrime(long p)
     {
         var isPrime = true;
         for (var i = p - 1; i > 1; i--)
@@ -46,7 +46,7 @@ public class DiffieHellmanHelper
     }
     
     
-    public static int ValidateBase(int p, int g)
+    public static long ValidateBase(long p, long g)
     {
         bool isValid;
         do
@@ -82,7 +82,7 @@ public class DiffieHellmanHelper
     }
 
 
-    public static int ValidateKey(int p, int key)
+    public static long ValidateKey(long p, long key)
     {
         bool isValid;
         do
@@ -109,7 +109,7 @@ public class DiffieHellmanHelper
     }
 
 
-    private static int ReduceKey(int key, int p)
+    private static long ReduceKey(long key, long p)
     {
         while (p <= key)
         {
@@ -120,7 +120,7 @@ public class DiffieHellmanHelper
     }
 
 
-    public static int ComputeKey(int g, int key, int p)
+    public static long ComputeKey(long g, long key, long p)
     {
         var temp = g % p;
         key -= 1;

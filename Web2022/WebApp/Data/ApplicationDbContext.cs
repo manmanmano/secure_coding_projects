@@ -16,4 +16,6 @@ public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole, str
     public DbSet<Caesar> Caesars { get; set; } = default!;
 
     public DbSet<WebApp.Domain.DiffieHellman>? DiffieHellman { get; set; }
+
+    public DbSet<WebApp.Domain.RSA>? RSA { get; set; }
 }

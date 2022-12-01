@@ -10,14 +10,14 @@ public class DiffieHellman
     [Key]
     public int Id { get; set; }
     
-    public int PublicKeyP { get; set; }
-    public int PublicKeyG { get; set; }
-    public int  PrivateKeyA { get; set; }
-    public int  PrivateKeyB { get; set; }
-    public int ComputedKeyX { get; set; }
-    public int ComputedKeyY { get; set; }
-    public int ComputedKeyX2 { get; set; }
-    public int ComputedKeyY2 { get; set; }
+    public long PublicKeyP { get; set; }
+    public long PublicKeyG { get; set; }
+    public long  PrivateKeyA { get; set; }
+    public long  PrivateKeyB { get; set; }
+    public long ComputedKeyX { get; set; }
+    public long ComputedKeyY { get; set; }
+    public long ComputedKeyX2 { get; set; }
+    public long ComputedKeyY2 { get; set; }
     
     
     public string AppUserId { get; set; } = default!;

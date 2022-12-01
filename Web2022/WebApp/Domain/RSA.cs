@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using WebApp.Domain.Identity;
 
@@ -15,7 +16,7 @@ public class RSA
     public int PrimeQ { get; set; }
     public int Modulus { get; set; }
     public int Exponent { get; set; }
-    public List<long> EncryptedBytes { get; set; } = default!;
+    public string EncryptedBytes { get; set; } = default!;
     
     public string AppUserId { get; set; } = default!;
     public AppUser? AppUser { get; set; }
