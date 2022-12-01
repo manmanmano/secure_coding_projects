@@ -182,14 +182,14 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PublicKeyP = table.Column<int>(type: "INTEGER", nullable: false),
-                    PublicKeyG = table.Column<int>(type: "INTEGER", nullable: false),
-                    PrivateKeyA = table.Column<int>(type: "INTEGER", nullable: false),
-                    PrivateKeyB = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComputedKeyX = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComputedKeyY = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComputedKeyX2 = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComputedKeyY2 = table.Column<int>(type: "INTEGER", nullable: false),
+                    PublicKeyP = table.Column<long>(type: "INTEGER", nullable: false),
+                    PublicKeyG = table.Column<long>(type: "INTEGER", nullable: false),
+                    PrivateKeyA = table.Column<long>(type: "INTEGER", nullable: false),
+                    PrivateKeyB = table.Column<long>(type: "INTEGER", nullable: false),
+                    ComputedKeyX = table.Column<long>(type: "INTEGER", nullable: false),
+                    ComputedKeyY = table.Column<long>(type: "INTEGER", nullable: false),
+                    ComputedKeyX2 = table.Column<long>(type: "INTEGER", nullable: false),
+                    ComputedKeyY2 = table.Column<long>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -197,6 +197,32 @@ namespace WebApp.Migrations
                     table.PrimaryKey("PK_DiffieHellman", x => x.Id);
                     table.ForeignKey(
                         name: "FK_DiffieHellman_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RSA",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Plaintext = table.Column<string>(type: "TEXT", nullable: false),
+                    PlaintextBytes = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    PrimeP = table.Column<int>(type: "INTEGER", nullable: false),
+                    PrimeQ = table.Column<int>(type: "INTEGER", nullable: false),
+                    Modulus = table.Column<int>(type: "INTEGER", nullable: false),
+                    Exponent = table.Column<int>(type: "INTEGER", nullable: false),
+                    EncryptedBytes = table.Column<string>(type: "TEXT", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RSA", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RSA_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -249,6 +275,11 @@ namespace WebApp.Migrations
                 name: "IX_DiffieHellman_AppUserId",
                 table: "DiffieHellman",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RSA_AppUserId",
+                table: "RSA",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -273,6 +304,9 @@ namespace WebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "DiffieHellman");
+
+            migrationBuilder.DropTable(
+                name: "RSA");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

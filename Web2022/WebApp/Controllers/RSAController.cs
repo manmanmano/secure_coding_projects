@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,82 +19,124 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
+        
+        
+        public string GetLoggedInUserId()
+        {
+            return User.Claims.First(cm =>
+                cm.Type == ClaimTypes.NameIdentifier).Value;
+        }
 
+        
         // GET: RSA
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.RSA.Include(r => r.AppUser);
+            var applicationDbContext = 
+                _context
+                    .RSA
+                    .Where(r=>r.AppUserId == GetLoggedInUserId()) 
+                    .Include(r => r.AppUser);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
+        
         // GET: RSA/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.RSA.AnyAsync(r => r.Id == id && r.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
             if (id == null || _context.RSA == null)
             {
                 return NotFound();
             }
 
-            var rSA = await _context.RSA
+            var rsa = await _context.RSA
                 .Include(r => r.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rSA == null)
+            
+            if (rsa == null)
             {
                 return NotFound();
             }
 
-            return View(rSA);
+            return View(rsa);
         }
 
+        
         // GET: RSA/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
+        
         // POST: RSA/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Plaintext,PlaintextBytes,PrimeP,PrimeQ,Modulus,Exponent,EncryptedBytes,AppUserId")] RSA rSA)
+        public async Task<IActionResult> Create(RSA rsa)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rSA);
+                _context.Add(rsa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", rSA.AppUserId);
-            return View(rSA);
+            
+            return View(rsa);
         }
 
+        
         // GET: RSA/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.RSA.AnyAsync(r => r.Id == id && r.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
             if (id == null || _context.RSA == null)
             {
                 return NotFound();
             }
 
-            var rSA = await _context.RSA.FindAsync(id);
-            if (rSA == null)
+            var rsa = await _context.RSA.FindAsync(id);
+            if (rsa == null)
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", rSA.AppUserId);
-            return View(rSA);
+            
+            return View(rsa);
         }
 
+        
         // POST: RSA/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Plaintext,PlaintextBytes,PrimeP,PrimeQ,Modulus,Exponent,EncryptedBytes,AppUserId")] RSA rSA)
+        public async Task<IActionResult> Edit(int id, RSA rsa)
         {
-            if (id != rSA.Id)
+            // check that the user actually owns the data
+            var isOwned = await _context.RSA.AnyAsync(r => r.Id == id && r.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+            
+            if (id != rsa.Id)
             {
                 return NotFound();
             }
@@ -102,12 +145,12 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(rSA);
+                    _context.Update(rsa);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RSAExists(rSA.Id))
+                    if (!RSAExists(rsa.Id))
                     {
                         return NotFound();
                     }
@@ -118,48 +161,70 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", rSA.AppUserId);
-            return View(rSA);
+            
+            return View(rsa);
         }
 
+        
         // GET: RSA/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.RSA.AnyAsync(r => r.Id == id && r.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+
             if (id == null || _context.RSA == null)
             {
                 return NotFound();
             }
 
-            var rSA = await _context.RSA
+            var rsa = await _context.RSA
                 .Include(r => r.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rSA == null)
+            if (rsa == null)
             {
                 return NotFound();
             }
 
-            return View(rSA);
+            return View(rsa);
         }
 
+        
         // POST: RSA/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // check that the user actually owns the data
+            var isOwned = await _context.RSA.AnyAsync(r => r.Id == id && r.AppUserId == GetLoggedInUserId());
+
+            if (!isOwned)
+            {
+                return NotFound();
+            }
+
             if (_context.RSA == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.RSA'  is null.");
             }
-            var rSA = await _context.RSA.FindAsync(id);
-            if (rSA != null)
+            
+            var rsa = await _context.RSA.FindAsync(id);
+            
+            if (rsa != null)
             {
-                _context.RSA.Remove(rSA);
+                _context.RSA.Remove(rsa);
             }
             
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
+        
         private bool RSAExists(int id)
         {
           return (_context.RSA?.Any(e => e.Id == id)).GetValueOrDefault();

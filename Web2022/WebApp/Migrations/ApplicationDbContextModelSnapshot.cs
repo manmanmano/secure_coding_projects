@@ -187,28 +187,28 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ComputedKeyX")
+                    b.Property<long>("ComputedKeyX")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ComputedKeyX2")
+                    b.Property<long>("ComputedKeyX2")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ComputedKeyY")
+                    b.Property<long>("ComputedKeyY")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ComputedKeyY2")
+                    b.Property<long>("ComputedKeyY2")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PrivateKeyA")
+                    b.Property<long>("PrivateKeyA")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PrivateKeyB")
+                    b.Property<long>("PrivateKeyB")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PublicKeyG")
+                    b.Property<long>("PublicKeyG")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PublicKeyP")
+                    b.Property<long>("PublicKeyP")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -282,6 +282,47 @@ namespace WebApp.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WebApp.Domain.RSA", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EncryptedBytes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Exponent")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Modulus")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Plaintext")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("PlaintextBytes")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<int>("PrimeP")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrimeQ")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("RSA");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -345,6 +386,17 @@ namespace WebApp.Migrations
                 });
 
             modelBuilder.Entity("WebApp.Domain.DiffieHellman", b =>
+                {
+                    b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("WebApp.Domain.RSA", b =>
                 {
                     b.HasOne("WebApp.Domain.Identity.AppUser", "AppUser")
                         .WithMany()
