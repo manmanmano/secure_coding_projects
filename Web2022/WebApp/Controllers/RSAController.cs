@@ -154,6 +154,19 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            
+            rsa.AppUserId = GetLoggedInUserId();
+            
+            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(rsa.Plaintext);
+            var longBytes = plaintextBytes.Select(b => (long)b).ToList();
+            rsa.PlaintextBytes = string.Join(" ", plaintextBytes);
+            rsa.PrimeP = RSAHelper.ValidateP(rsa.PrimeP);
+            rsa.PrimeQ = RSAHelper.ValidateQ(rsa.PrimeP, rsa.PrimeQ);
+            rsa.PublicKeyN = rsa.PrimeP * rsa.PrimeQ;
+            rsa.Modulus = (rsa.PrimeP - 1) * (rsa.PrimeQ - 1);
+            rsa.Exponent = RSAHelper.CalculateE(rsa.Modulus, 1);
+
+            rsa.EncryptedBytes = RSAHelper.EncryptTextBytes(longBytes, rsa.Exponent, rsa.PublicKeyN);
 
             if (ModelState.IsValid)
             {
